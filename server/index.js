@@ -5,6 +5,7 @@ import express from "express";
 import { getAllUsers, postLogin, postSignup } from "./Controllers/user.js";
 import { addPlant, deletePlant, getPlantById, getPlantBySlug, getPlants, updatePlant } from "./Controllers/Plant.js";
 import jwtCheck from "./Middleware/jwtCheck.js";
+import adminCheck from "./Middleware/adminCheck.js";
 
 const app = express();
 
@@ -26,13 +27,14 @@ const connectDB = async () => {
 };
 
 //Admin
-app.get("/users", getAllUsers);
-app.post("/plants/add", jwtCheck, addPlant);
+app.get("/users",jwtCheck, adminCheck, getAllUsers);
+app.post("/plants/add",jwtCheck, adminCheck, addPlant);
+app.delete("/plants/:id",jwtCheck, adminCheck, deletePlant);
+app.put("/plants/:id",jwtCheck, adminCheck, updatePlant);
+
 app.get("/plants/slug/:slug", getPlantBySlug);
 app.get("/plants", getPlants);
 app.get("/plants/:id", getPlantById);
-app.delete("/plants/:id", deletePlant);
-app.put("/plants/:id", updatePlant);
 
 app.post("/signup", postSignup);
 app.post("/login", postLogin);

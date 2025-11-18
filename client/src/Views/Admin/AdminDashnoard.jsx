@@ -18,10 +18,8 @@ function AdminDashboard() {
           Welcome, <span className="font-semibold">{admin?.name}</span> 👋
         </p>
 
-        {/* GRID CARDS */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
 
-          {/* USERS */}
           <Link to="/admin/users">
             <div className="p-6 bg-white rounded-xl shadow hover:shadow-lg cursor-pointer hover:scale-[1.02] transition">
               <FaUsers className="text-yellow-600 text-4xl mb-4" />
@@ -32,7 +30,6 @@ function AdminDashboard() {
             </div>
           </Link>
 
-          {/* ADD PLANT */}
           <Link to="/admin/add-plant">
             <div className="p-6 bg-white rounded-xl shadow hover:shadow-lg cursor-pointer hover:scale-[1.02] transition">
               <FaPlusCircle className="text-blue-600 text-4xl mb-4" />
@@ -43,8 +40,7 @@ function AdminDashboard() {
             </div>
           </Link>
 
-          {/* MANAGE PLANTS */}
-          <Link to="/all-plants-admin">
+          <Link to="/admin/manage-plants">
             <div className="p-6 bg-white rounded-xl shadow hover:shadow-lg cursor-pointer hover:scale-[1.02] transition">
               <FaLeaf className="text-green-600 text-4xl mb-4" />
               <h2 className="text-xl font-bold mb-2">Manage Plants</h2>
@@ -54,7 +50,6 @@ function AdminDashboard() {
             </div>
           </Link>
 
-          {/* VIEW ORDERS */}
           <div className="p-6 bg-white rounded-xl shadow hover:shadow-lg cursor-pointer hover:scale-[1.02] transition">
             <FaShoppingCart className="text-purple-600 text-4xl mb-4" />
             <h2 className="text-xl font-bold mb-2">View Orders</h2>
@@ -63,7 +58,6 @@ function AdminDashboard() {
             </p>
           </div>
 
-          {/* LOGOUT */}
           <div
             onClick={() => {
               localStorage.removeItem("loggedInUser");

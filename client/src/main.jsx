@@ -8,11 +8,13 @@ import About from './Views/About';
 import Cart from './Views/Cart';
 import AdminDashboard from './Views/Admin/AdminDashnoard';
 import Users from './Views/Admin/Users';
-import AddPlant from './Views/Admin/Add-plant';
+import AddPlant from './Views/Admin/AddPlant';
 import AllPlants from './Views/AllPlants';
 import PlantDetails from './Views/PlantDetails';
 import AdminRoute from './Components/AdminRoute';
 import NotFound from './Views/NotFound';
+import ManagePlants from './Views/Admin/ManagePlants';
+import EditPlant from './Views/Admin/EditPlant';
 
 createRoot(document.getElementById('root')).render(
     <BrowserRouter>
@@ -30,6 +32,8 @@ createRoot(document.getElementById('root')).render(
             <Route path="/admin/dashboard" element={<AdminRoute><AdminDashboard /></AdminRoute>} />
             <Route path="/admin/users" element={<AdminRoute><Users /></AdminRoute>} />
             <Route path="/admin/add-plant" element={<AdminRoute><AddPlant /></AdminRoute>} />
+            <Route path="/admin/manage-plants" element={<AdminRoute><ManagePlants /></AdminRoute>} />
+            <Route path="/admin/edit-plant/:id" element={<AdminRoute><EditPlant /></AdminRoute>} />
         </Routes>
     </BrowserRouter>
 )

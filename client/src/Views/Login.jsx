@@ -20,11 +20,15 @@ function Login() {
       );
 
       if (response?.data?.success) {
-        alert("Login successful!");
+        const loggedUser = response.data.user;
 
-        localStorage.setItem("loggedInUser", JSON.stringify(response.data.user));
+        localStorage.setItem("loggedInUser", JSON.stringify(loggedUser));
 
-        window.location.href = "/";
+        if (loggedUser.role === "admin") {
+          window.location.href = "/admin/dashboard";
+        } else {
+          window.location.href = "/";
+        }
       }
     } catch (err) {
       console.error("Login failed:", err);
@@ -61,6 +65,7 @@ function Login() {
         >
           Login
         </button>
+
         <p className="text-center text-sm text-gray-600 mt-4">
           Don't have an account?{" "}
           <Link

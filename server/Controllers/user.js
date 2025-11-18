@@ -92,4 +92,20 @@ const postLogin = async (req, res) => {
   });
 };
 
-export { postSignup, postLogin };
+//Get users - Admin
+const getAllUsers = async (req, res) => {
+  try {
+    const users = await User.find().select("-password");
+    return res.json({
+      success: true,
+      users,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "Server error",
+    });
+  }
+};
+
+export { postSignup, postLogin, getAllUsers };

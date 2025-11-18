@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
-import { postLogin, postSignup } from "./Controllers/user.js";
+import { getAllUsers, postLogin, postSignup } from "./Controllers/user.js";
 
 const app = express();
 
@@ -23,8 +23,10 @@ const connectDB = async () => {
   }
 };
 
-app.post("/signup", postSignup);
+//Admin
+app.get("/users", getAllUsers);
 
+app.post("/signup", postSignup);
 app.post("/login", postLogin);
 
 app.get("/", (req, res) => {

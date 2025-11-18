@@ -12,6 +12,7 @@ import AddPlant from './Views/Admin/Add-plant';
 import AllPlants from './Views/AllPlants';
 import PlantDetails from './Views/PlantDetails';
 import AdminRoute from './Components/AdminRoute';
+import NotFound from './Views/NotFound';
 
 createRoot(document.getElementById('root')).render(
     <BrowserRouter>
@@ -23,6 +24,7 @@ createRoot(document.getElementById('root')).render(
             <Route path="/cart" element={<Cart />} />
             <Route path="/plants" element={<AllPlants />} />
             <Route path="/plants/slug/:slug" element={<PlantDetails />} />
+            <Route path="*" element={<NotFound/>} />
 
             {/* Admin Routes */}
             <Route path="/admin/dashboard" element={<AdminRoute><AdminDashboard /></AdminRoute>} />

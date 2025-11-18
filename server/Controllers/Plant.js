@@ -37,10 +37,9 @@ import Plant from "../Models/Plant.js";
 // };
 
 
-// ADD PLANT
+// add plant
 const addPlant = async (req, res) => {
   try {
-    // 1️⃣ Check if user is authenticated (jwtCheck already sets req.user)
     if (!req.user) {
       return res.status(401).json({
         success: false,
@@ -48,10 +47,8 @@ const addPlant = async (req, res) => {
       });
     }
 
-    // 2️⃣ Extract fields from body
     const { name, description, price, category, stock, image } = req.body;
 
-    // 3️⃣ Validate required fields
     if (!name || !description || !price || !category || !image) {
       return res.status(400).json({
         success: false,
@@ -59,7 +56,6 @@ const addPlant = async (req, res) => {
       });
     }
 
-    // 4️⃣ Create plant
     const newPlant = new Plant({
       name,
       description,
@@ -67,7 +63,7 @@ const addPlant = async (req, res) => {
       category,
       stock,
       image,
-      addedBy: req.user.id,   // Optionally store who added plant
+      addedBy: req.user.id,  
     });
 
     await newPlant.save();
@@ -88,7 +84,7 @@ const addPlant = async (req, res) => {
 };
 
 
-// GET ALL PLANTS
+// get all plants
 const getPlants = async (req, res) => {
   try {
     const plants = await Plant.find().sort({ createdAt: -1 });
@@ -98,7 +94,7 @@ const getPlants = async (req, res) => {
   }
 };
 
-// GET SINGLE PLANT
+// get single plant
 const getPlantById = async (req, res) => {
   try {
     const plant = await Plant.findById(req.params.id);
@@ -113,7 +109,7 @@ const getPlantById = async (req, res) => {
   }
 };
 
-// DELETE PLANT
+// delete plant
 const deletePlant = async (req, res) => {
   try {
     const plant = await Plant.findByIdAndDelete(req.params.id);
@@ -128,7 +124,7 @@ const deletePlant = async (req, res) => {
   }
 };
 
-// UPDATE PLANT
+// update plant
 const updatePlant = async (req, res) => {
   try {
     const updatedPlant = await Plant.findByIdAndUpdate(

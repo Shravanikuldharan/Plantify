@@ -8,6 +8,8 @@ import About from './Views/About';
 import Cart from './Views/Cart';
 import AdminDashboard from './Views/Admin/AdminDashnoard';
 import Users from './Views/Admin/Users';
+import AddPlant from './Views/Admin/Add-plant';
+import AllPlants from './Views/AllPlants';
 
 createRoot(document.getElementById('root')).render(
     <BrowserRouter>
@@ -17,10 +19,12 @@ createRoot(document.getElementById('root')).render(
             <Route path="/signup" element={<Signup />} />
             <Route path="/about" element={<About />} />
             <Route path="/cart" element={<Cart />} />
+            <Route path="/plants" element={<AllPlants />} />
 
             {/* Admin Routes */}
             <Route path="/admin/dashboard" element={<AdminDashboard />} />
             <Route path="/admin/users" element={<Users />} />
+            <Route path="/admin/add-plant" element={<AddPlant />} />
         </Routes>
     </BrowserRouter>
 )

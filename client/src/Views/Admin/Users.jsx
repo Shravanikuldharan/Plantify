@@ -21,10 +21,10 @@ function Users() {
 
   return (
     <div className="min-h-screen bg-gray-100 p-6">
-      <h2 className="text-3xl font-bold mb-6 text-center">Manage Users</h2>
+      <h2 className="text-3xl font-bold mb-6 text-center">View Users</h2>
 
       <div className="overflow-x-auto">
-        <table className="w-full bg-white shadow-md rounded-lg">
+        <table className="w-full bg-white shadow-md rounded-lg overflow-hidden">
           <thead className="bg-blue-600 text-white">
             <tr>
               <th className="py-3 px-4 text-left">Name</th>
@@ -37,13 +37,13 @@ function Users() {
 
           <tbody>
             {users.map((u) => (
-              <tr key={u._id} className="border-b">
+              <tr key={u._id} className="border-b hover:bg-gray-50 transition duration-150">
                 <td className="py-3 px-4">{u.name}</td>
                 <td className="py-3 px-4">{u.email}</td>
                 <td className="py-3 px-4">{u.phone}</td>
                 <td className="py-3 px-4">{u.address}</td>
                 <td className="py-3 px-4 font-semibold">
-                  {u.role === "admin" ? "🛡️ Admin" : "👤 User"}
+                  {u.role === "admin" ? "Admin" : "User"}
                 </td>
               </tr>
             ))}

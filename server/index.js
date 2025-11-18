@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
 import { getAllUsers, postLogin, postSignup } from "./Controllers/user.js";
+import { addPlant, deletePlant, getPlantById, getPlants, updatePlant } from "./Controllers/Plant.js";
 
 const app = express();
 
@@ -25,6 +26,11 @@ const connectDB = async () => {
 
 //Admin
 app.get("/users", getAllUsers);
+app.post("/plants/add", addPlant);
+app.get("/plants", getPlants);
+app.get("/plants/:id", getPlantById);
+app.delete("/plants/:id", deletePlant);
+app.put("/plants/:id", updatePlant);
 
 app.post("/signup", postSignup);
 app.post("/login", postLogin);

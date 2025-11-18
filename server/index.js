@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import express from "express";
 import { getAllUsers, postLogin, postSignup } from "./Controllers/user.js";
 import { addPlant, deletePlant, getPlantById, getPlants, updatePlant } from "./Controllers/Plant.js";
+import jwtCheck from "./Middleware/jwtCheck.js";
 
 const app = express();
 
@@ -26,7 +27,7 @@ const connectDB = async () => {
 
 //Admin
 app.get("/users", getAllUsers);
-app.post("/plants/add", addPlant);
+app.post("/plants/add", jwtCheck, addPlant);
 app.get("/plants", getPlants);
 app.get("/plants/:id", getPlantById);
 app.delete("/plants/:id", deletePlant);

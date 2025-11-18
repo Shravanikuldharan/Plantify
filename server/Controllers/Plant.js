@@ -1,10 +1,57 @@
 import Plant from "../Models/Plant.js";
 
 // ADD PLANT
+// const addPlant = async (req, res) => {
+//   try {
+//     const { name, description, price, category, stock, image } = req.body;
+
+//     if (!name || !description || !price || !category || !image) {
+//       return res.status(400).json({
+//         success: false,
+//         message: "All fields except stock are required",
+//       });
+//     }
+
+//     const newPlant = new Plant({
+//       name,
+//       description,
+//       price,
+//       category,
+//       stock,
+//       image,  // simple string URL
+//     });
+
+//     await newPlant.save();
+
+//     return res.json({
+//       success: true,
+//       message: "Plant added successfully",
+//       plant: newPlant,
+//     });
+//   } catch (error) {
+//     return res.status(500).json({
+//       success: false,
+//       message: "Server error",
+//     });
+//   }
+// };
+
+
+// ADD PLANT
 const addPlant = async (req, res) => {
   try {
+    // 1️⃣ Check if user is authenticated (jwtCheck already sets req.user)
+    if (!req.user) {
+      return res.status(401).json({
+        success: false,
+        message: "Unauthorized: Invalid or missing token",
+      });
+    }
+
+    // 2️⃣ Extract fields from body
     const { name, description, price, category, stock, image } = req.body;
 
+    // 3️⃣ Validate required fields
     if (!name || !description || !price || !category || !image) {
       return res.status(400).json({
         success: false,
@@ -12,13 +59,15 @@ const addPlant = async (req, res) => {
       });
     }
 
+    // 4️⃣ Create plant
     const newPlant = new Plant({
       name,
       description,
       price,
       category,
       stock,
-      image,  // simple string URL
+      image,
+      addedBy: req.user.id,   // Optionally store who added plant
     });
 
     await newPlant.save();
@@ -28,13 +77,16 @@ const addPlant = async (req, res) => {
       message: "Plant added successfully",
       plant: newPlant,
     });
+
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
       success: false,
       message: "Server error",
     });
   }
 };
+
 
 // GET ALL PLANTS
 const getPlants = async (req, res) => {

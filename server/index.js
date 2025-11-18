@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
+import { postLogin, postSignup } from "./Controllers/user.js";
 
 const app = express();
 
@@ -21,6 +22,10 @@ const connectDB = async () => {
     console.error("MongoDB connection error:", error);
   }
 };
+
+app.post("/signup", postSignup);
+
+app.post("/login", postLogin);
 
 app.get("/", (req, res) => {
   res.json({

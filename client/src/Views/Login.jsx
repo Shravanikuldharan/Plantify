@@ -23,6 +23,7 @@ function Login() {
         const loggedUser = response.data.user;
 
         localStorage.setItem("loggedInUser", JSON.stringify(loggedUser));
+        localStorage.setItem("token", response.data.token);
 
         if (loggedUser.role === "admin") {
           window.location.href = "/admin/dashboard";

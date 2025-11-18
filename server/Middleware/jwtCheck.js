@@ -1,3 +1,5 @@
+import jwt from "jsonwebtoken";
+
 const jwtCheck = (req, res, next) => {
   req.user = null;
 

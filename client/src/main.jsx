@@ -10,6 +10,7 @@ import AdminDashboard from './Views/Admin/AdminDashnoard';
 import Users from './Views/Admin/Users';
 import AddPlant from './Views/Admin/Add-plant';
 import AllPlants from './Views/AllPlants';
+import PlantDetails from './Views/PlantDetails';
 
 createRoot(document.getElementById('root')).render(
     <BrowserRouter>
@@ -20,6 +21,7 @@ createRoot(document.getElementById('root')).render(
             <Route path="/about" element={<About />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/plants" element={<AllPlants />} />
+            <Route path="/plants/slug/:slug" element={<PlantDetails />} />
 
             {/* Admin Routes */}
             <Route path="/admin/dashboard" element={<AdminDashboard />} />

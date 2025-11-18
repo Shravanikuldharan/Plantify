@@ -18,25 +18,50 @@ function AddPlant() {
     setError("");
     setSuccess("");
 
+    const { name, description, price, category, stock, image } = plant;
+
+    // basic validation
+    if (!name || !description || !price || !category || !image) {
+      setError("All fields except stock are required");
+      return;
+    }
+
     try {
-      const response = await axios.post(
+      const token = localStorage.getItem("token");
+
+      const res = await axios.post(
         `${import.meta.env.VITE_API_URL}/plants/add`,
-        plant
+        {
+          name,
+          description,
+          price,
+          category,
+          stock,
+          image,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
 
-      if (response.data.success) {
-        setSuccess("Plant added successfully!");
-        setPlant({
-          name: "",
-          description: "",
-          price: "",
-          category: "",
-          stock: "",
-          image: "",
-        });
-      }
+      setSuccess("Plant added successfully!");
+      console.log(res.data);
+
+      // Clear form
+      setPlant({
+        name: "",
+        description: "",
+        price: "",
+        category: "",
+        stock: "",
+        image: "",
+      });
+
     } catch (err) {
-      setError(err.response?.data?.message || "Something went wrong");
+      console.error(err);
+      setError(err.response?.data?.message || "Something went wrong!");
     }
   };
 
@@ -45,7 +70,6 @@ function AddPlant() {
       <div className="w-[400px] bg-white p-6 rounded-lg shadow-lg">
         <h2 className="text-center text-2xl font-bold mb-6">Add New Plant</h2>
 
-        {/* Name */}
         <input
           type="text"
           placeholder="Plant Name"
@@ -54,7 +78,6 @@ function AddPlant() {
           className="w-full p-3 mb-3 rounded border border-gray-300 outline-none focus:ring-2 focus:ring-green-500"
         />
 
-        {/* Description */}
         <textarea
           placeholder="Description"
           value={plant.description}
@@ -62,7 +85,6 @@ function AddPlant() {
           className="w-full p-3 mb-3 rounded border border-gray-300 outline-none h-24 focus:ring-2 focus:ring-green-500"
         />
 
-        {/* Price */}
         <input
           type="number"
           placeholder="Price"
@@ -71,7 +93,6 @@ function AddPlant() {
           className="w-full p-3 mb-3 rounded border border-gray-300 outline-none focus:ring-2 focus:ring-green-500"
         />
 
-        {/* Category */}
         <select
           value={plant.category}
           onChange={(e) => setPlant({ ...plant, category: e.target.value })}
@@ -90,7 +111,6 @@ function AddPlant() {
           <option value="Climber">Climber</option>
         </select>
 
-        {/* Stock */}
         <input
           type="number"
           placeholder="Stock"
@@ -114,7 +134,6 @@ function AddPlant() {
         {/* Success */}
         {success && <p className="text-green-600 text-sm mb-2">{success}</p>}
 
-        {/* Submit Button */}
         <button
           onClick={handleAddPlant}
           className="w-full bg-green-600 text-white py-3 rounded-md font-semibold hover:bg-green-700 transition"

@@ -8,6 +8,12 @@ const plantSchema = new Schema(
       trim: true,
     },
 
+    slug: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+
     description: {
       type: String,
       required: true,
@@ -41,7 +47,7 @@ const plantSchema = new Schema(
     },
 
     image: {
-      type: String, // ImageKit URL
+      type: String, 
       required: true,
     },
   },

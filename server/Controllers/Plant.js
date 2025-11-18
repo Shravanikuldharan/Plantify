@@ -1,52 +1,8 @@
 import Plant from "../Models/Plant.js";
 
-// ADD PLANT
-// const addPlant = async (req, res) => {
-//   try {
-//     const { name, description, price, category, stock, image } = req.body;
-
-//     if (!name || !description || !price || !category || !image) {
-//       return res.status(400).json({
-//         success: false,
-//         message: "All fields except stock are required",
-//       });
-//     }
-
-//     const newPlant = new Plant({
-//       name,
-//       description,
-//       price,
-//       category,
-//       stock,
-//       image,  // simple string URL
-//     });
-
-//     await newPlant.save();
-
-//     return res.json({
-//       success: true,
-//       message: "Plant added successfully",
-//       plant: newPlant,
-//     });
-//   } catch (error) {
-//     return res.status(500).json({
-//       success: false,
-//       message: "Server error",
-//     });
-//   }
-// };
-
-
-// add plant
+// add plant slug
 const addPlant = async (req, res) => {
   try {
-    if (!req.user) {
-      return res.status(401).json({
-        success: false,
-        message: "Unauthorized: Invalid or missing token",
-      });
-    }
-
     const { name, description, price, category, stock, image } = req.body;
 
     if (!name || !description || !price || !category || !image) {
@@ -63,19 +19,26 @@ const addPlant = async (req, res) => {
       category,
       stock,
       image,
-      addedBy: req.user.id,  
+      slug: `temp-${Date.now()}-${Math.random().toString()}`,
     });
 
-    await newPlant.save();
+    const savedPlant = await newPlant.save();
 
-    return res.json({
+    const finalSlug = `${name.toLowerCase().replace(/ /g, "-")}-${savedPlant._id}`
+      .replace(/[^\w-]+/g, "");
+
+    savedPlant.slug = finalSlug;
+
+    await savedPlant.save();
+
+    res.json({
       success: true,
       message: "Plant added successfully",
-      plant: newPlant,
+      plant: savedPlant,
     });
-
   } catch (error) {
     console.log(error);
+
     return res.status(500).json({
       success: false,
       message: "Server error",
@@ -83,6 +46,27 @@ const addPlant = async (req, res) => {
   }
 };
 
+const getPlantBySlug = async (req, res) => {
+  try {
+    const { slug } = req.params;
+
+    const plant = await Plant.findOne({ slug });
+
+    if (!plant) {
+      return res.status(404).json({
+        success: false,
+        message: "Plant not found",
+      });
+    }
+
+    res.json({ success: true, plant });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "Server error",
+    });
+  }
+};
 
 // get all plants
 const getPlants = async (req, res) => {
@@ -139,4 +123,4 @@ const updatePlant = async (req, res) => {
   }
 };
 
-export { addPlant, getPlants, getPlantById, deletePlant, updatePlant };
+export { addPlant, getPlants, getPlantById, deletePlant, updatePlant,getPlantBySlug };

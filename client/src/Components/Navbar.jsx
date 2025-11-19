@@ -42,14 +42,14 @@ function Navbar() {
 
   return (
     <nav className="bg-orange-100 shadow border-b sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-5 py-3 flex justify-between items-center">
+      <div className="max-w-7xl mx-auto px-10 py-3 flex justify-between items-center">
 
         <Link to="/" className="flex items-center space-x-2">
-          <img src={logo} className="h-12 object-contain" alt="Logo" />
-          <h1 className="text-2xl font-bold text-green-700">Plantify</h1>
+          <img src={logo} className="h-14 object-contain" alt="Logo" />
+          <h1 className="text-3xl font-bold text-green-700">Plantify</h1>
         </Link>
 
-        <div className="flex items-center space-x-8 text-gray-700 font-medium">
+        <div className="flex items-center text-[18px] space-x-10 text-gray-700 font-medium">
 
           <Link to="/" className={navLinkStyle("/")}>
             Home

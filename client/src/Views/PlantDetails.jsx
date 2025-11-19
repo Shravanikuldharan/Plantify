@@ -5,10 +5,10 @@ import { plantCareConfig, getCategoryTagline } from "../Config/PlantCareConfig.j
 import Navbar from "../Components/Navbar.jsx";
 
 function PlantDetails() {
-  const { slug } = useParams(); 
+  const { slug } = useParams();
   const [plant, setPlant] = useState(null);
   const [qty, setQty] = useState(1);
-  const [tagline, setTagline] = useState('');  
+  const [tagline, setTagline] = useState('');
 
   useEffect(() => {
     fetchPlant();
@@ -19,8 +19,8 @@ function PlantDetails() {
       const res = await axios.get(
         `${import.meta.env.VITE_API_URL}/plants/slug/${slug}`
       );
-      setPlant(res.data.plant);  
-      setTagline(getCategoryTagline(res.data.plant.category)); 
+      setPlant(res.data.plant);
+      setTagline(getCategoryTagline(res.data.plant.category));
     } catch (error) {
       console.log("Error fetching plant:", error);
     }
@@ -34,29 +34,33 @@ function PlantDetails() {
     ? plant.price - (plant.price * plant.saleDiscount) / 100
     : plant.price;
 
-  const addToCart = () => {
-    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  const addToCart = async () => {
+    const token = localStorage.getItem("token");
 
-    const existing = cart.find(item => item._id === plant._id);
-
-    if (existing) {
-      existing.qty += qty;
-    } else {
-      cart.push({
-        _id: plant._id,
-        slug: plant.slug,  
-        name: plant.name,
-        image: plant.image,
-        price: discountedPrice,
-        originalPrice: plant.price,
-        saleDiscount: plant.saleDiscount,
-        qty,
-        stock: plant.stock
-      });
+    if (!token) {
+      alert("Please login first!");
+      return;
     }
 
-    localStorage.setItem("cart", JSON.stringify(cart));
-    alert("Added to cart!");
+    try {
+      const res = await axios.post(
+        `${import.meta.env.VITE_API_URL}/cart/add`,
+        {
+          plantId: plant._id,
+          qty: qty
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
+
+      alert("Added to cart!");
+    } catch (err) {
+      console.log(err);
+      alert("Error adding to cart");
+    }
   };
 
   return (
@@ -88,7 +92,7 @@ function PlantDetails() {
             </span>
 
             <p className="text-gray-500 italic mb-4">
-              {tagline} 
+              {tagline}
             </p>
 
             <p className="text-4xl font-semibold text-green-700 mb-5">

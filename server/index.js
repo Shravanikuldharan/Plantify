@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import express from "express";
 import { getAllUsers, postLogin, postSignup, updateUser } from "./Controllers/user.js";
 import { addPlant, deletePlant, getPlantById, getPlantBySlug, getPlants, updatePlant } from "./Controllers/Plant.js";
+import { addToCart, getCart, removeFromCart } from "./Controllers/Cart.js";
 import jwtCheck from "./Middleware/jwtCheck.js";
 import adminCheck from "./Middleware/adminCheck.js";
 
@@ -35,6 +36,10 @@ app.put("/plants/:id",jwtCheck, adminCheck, updatePlant);
 app.get("/plants/slug/:slug", getPlantBySlug);
 app.get("/plants", getPlants);
 app.get("/plants/:id", getPlantById);
+
+app.post("/cart/add", jwtCheck, addToCart);
+app.get("/cart", jwtCheck, getCart);
+app.delete("/cart/remove/:id", jwtCheck, removeFromCart);
 
 app.post("/signup", postSignup);
 app.post("/login", postLogin);

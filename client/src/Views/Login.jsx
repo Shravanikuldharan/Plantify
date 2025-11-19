@@ -21,9 +21,10 @@ function Login() {
 
       if (response?.data?.success) {
         const loggedUser = response.data.user;
+        const token = response.data.token;
 
         localStorage.setItem("loggedInUser", JSON.stringify(loggedUser));
-        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("token", token);
 
         if (loggedUser.role === "admin") {
           window.location.href = "/admin/dashboard";

@@ -5,19 +5,28 @@ function Users() {
   const [users, setUsers] = useState([]);
 
   const fetchUsers = async () => {
-    try {
-      const response = await axios.get(`${import.meta.env.VITE_API_URL}/users`);
-      if (response.data.success) {
-        setUsers(response.data.users);
-      }
-    } catch (error) {
-      console.log("Error fetching users", error);
-    }
-  };
+  try {
+    const token = localStorage.getItem("token");
 
-  useEffect(() => {
-    fetchUsers();
-  }, []);
+    const response = await axios.get(
+      `${import.meta.env.VITE_API_URL}/users`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    if (response.data.success) {
+      setUsers(response.data.users);
+    }
+  } catch (error) {
+    console.log("Error fetching users", error);
+  }
+};
+useEffect(() => {
+  fetchUsers();
+}, []);
 
   return (
     <div className="min-h-screen bg-gray-100 p-6">

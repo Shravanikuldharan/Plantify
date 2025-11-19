@@ -1,4 +1,7 @@
 import { Link } from "react-router";
+import logo from "../assets/logo.png";
+import { FaGithub, FaLinkedin } from "react-icons/fa";
+import { SiPeerlist } from "react-icons/si";
 
 function Footer() {
   return (
@@ -6,59 +9,95 @@ function Footer() {
       <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10">
 
         <div>
-          <h1 className="text-2xl font-bold text-white mb-3">🌿 Plantify</h1>
+          <h1 className="text-2xl font-bold text-white mb-3 flex items-center">
+            <img src={logo} className="h-10 w-10 object-contain mr-2" />
+            Plantify
+          </h1>
           <p className="text-gray-400 leading-relaxed">
-            Bringing nature closer to your home.  
+            Bringing nature closer to your home.
             Fresh plants, premium quality, delivered to your doorstep.
           </p>
         </div>
-
 
         <div>
           <h2 className="text-lg font-semibold text-white mb-3">Quick Links</h2>
           <ul className="space-y-2">
             <li><Link to="/" className="hover:text-white">Home</Link></li>
-            <li><Link to="/plants" className="hover:text-white">Shop Plants</Link></li>
+            <li><Link to="/plants" className="hover:text-white">Plants</Link></li>
             <li><Link to="/about" className="hover:text-white">About Us</Link></li>
             <li><Link to="/cart" className="hover:text-white">Cart</Link></li>
           </ul>
         </div>
 
         <div>
-          <h2 className="text-lg font-semibold text-white mb-3">Categories</h2>
+          <h2 className="text-lg font-semibold text-white mb-3">Contact Us</h2>
+
           <ul className="space-y-2">
-            <li className="hover:text-white">Indoor Plants</li>
-            <li className="hover:text-white">Outdoor Plants</li>
-            <li className="hover:text-white">Succulents</li>
-            <li className="hover:text-white">Air Purifying</li>
-            <li className="hover:text-white">Flowering</li>
+
+            <li>
+              <a
+                href="tel:9834023208"
+                className="hover:text-white transition"
+              >
+                9834023208
+              </a>
+            </li>
+
+            {/* Email */}
+            <li>
+              <a
+                href="mailto:plantify@gmail.com"
+                className="hover:text-white transition"
+              >
+                plantify@gmail.com
+              </a>
+            </li>
+
+            <li>
+              <a
+                href="https://maps.app.goo.gl/yAL4BxJ7wPxVfsFW9"
+                target="_blank"
+                className="hover:text-white transition"
+              >
+                Ahmednagar, Maharashtra
+              </a>
+            </li>
+
           </ul>
         </div>
 
         <div>
-          <h2 className="text-lg font-semibold text-white mb-3">Contact Us</h2>
-          <ul className="space-y-2">
-            <li className="hover:text-white">+91 98765 43210</li>
-            <li className="hover:text-white">support@plantify.com</li>
-            <li className="hover:text-white">Pune, Maharashtra</li>
-          </ul>
+          <h2 className="text-lg font-semibold text-white mb-3">Follow Us</h2>
 
-          <div className="flex gap-4 mt-4">
-            <a className="text-gray-400 hover:text-white text-xl cursor-pointer">
-              <i className="fa-brands fa-facebook"></i>
+          <div className="flex gap-5 mt-4">
+
+            <a
+              href="https://github.com/Shravanikuldharan/Plantify"
+              target="_blank"
+              className="text-gray-400 hover:text-white text-2xl"
+            >
+              <FaGithub />
             </a>
-            <a className="text-gray-400 hover:text-white text-xl cursor-pointer">
-              <i className="fa-brands fa-instagram"></i>
+
+            <a
+              href="https://www.linkedin.com/in/shravani-kuldharan"
+              target="_blank"
+              className="text-gray-400 hover:text-white text-2xl"
+            >
+              <FaLinkedin />
             </a>
-            <a className="text-gray-400 hover:text-white text-xl cursor-pointer">
-              <i className="fa-brands fa-twitter"></i>
+
+            <a
+              href="https://peerlist.io/shravani_k"
+              target="_blank"
+              className="text-gray-400 hover:text-white text-2xl"
+            >
+              <SiPeerlist />
             </a>
+
           </div>
         </div>
-      </div>
 
-      <div className="text-center text-gray-500 text-sm mt-10 border-t border-gray-700 pt-6">
-        © {new Date().getFullYear()} Plantify — All Rights Reserved 🌱
       </div>
     </footer>
   );

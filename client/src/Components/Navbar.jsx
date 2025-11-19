@@ -42,7 +42,7 @@ function Navbar() {
     }`;
 
   return (
-    <nav className="bg-white shadow border-b sticky top-0 z-50">
+    <nav className="bg-orange-100 shadow border-b sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-5 py-3 flex justify-between items-center">
 
         <Link to="/" className="flex items-center space-x-2">
@@ -54,6 +54,10 @@ function Navbar() {
 
           <Link to="/" className={navLinkStyle("/")}>
             Home
+          </Link>
+
+          <Link to="/about" className={navLinkStyle("/about")}>
+            About
           </Link>
 
           <Link to="/plants" className={navLinkStyle("/plants")}>

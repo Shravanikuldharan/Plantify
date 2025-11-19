@@ -1,13 +1,100 @@
-import React from 'react'
-import Navbar from '../Components/Navbar';
+import { useEffect, useState } from "react";
+import { Link } from "react-router"; // Import Link for navigation
+import Navbar from "../Components/Navbar";
 
 function Cart() {
+  const [cart, setCart] = useState([]);
+
+  useEffect(() => {
+    const data = JSON.parse(localStorage.getItem("cart")) || [];
+    setCart(data);
+  }, []);
+
+  const updateQty = (id, newQty) => {
+    const updated = cart.map(item =>
+      item._id === id ? { ...item, qty: newQty } : item
+    );
+
+    setCart(updated);
+    localStorage.setItem("cart", JSON.stringify(updated));
+  };
+
+  const removeItem = (id) => {
+    const updated = cart.filter(item => item._id !== id);
+    setCart(updated);
+    localStorage.setItem("cart", JSON.stringify(updated));
+  };
+
   return (
-     <div>
-        <Navbar />
-        <div className="text-[40px]">Cart</div>
-    </div>
-  )
+    <>
+      <Navbar />
+      <div className="max-w-5xl mx-auto p-6">
+        <h1 className="text-4xl font-bold mb-6 text-center">Your Cart</h1>
+
+        {cart.length === 0 ? (
+          <div className="text-center text-lg text-gray-500">
+            Your cart is empty.
+          </div>
+        ) : (
+          <>
+            <div className="space-y-6">
+              {cart.map((item) => (
+                <div
+                  key={item._id}
+                  className="flex items-center justify-between bg-white shadow-lg p-5 rounded-lg"
+                >
+                  {/* Image: Wrap image in a Link to navigate to Plant Details */}
+                  <Link to={`/plants/slug/${item._id}`}>
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="w-24 h-24 rounded-md object-cover cursor-pointer"
+                    />
+                  </Link>
+
+                  {/* Product Info */}
+                  <div className="flex-1 ml-4">
+                    <Link to={`/plants/slug/${item._id}`}>
+                      <h2 className="text-lg font-semibold text-gray-900 hover:text-blue-500 cursor-pointer">
+                        {item.name}
+                      </h2>
+                    </Link>
+                  </div>
+
+                  {/* Qty Edit */}
+                  <div className="flex items-center gap-3">
+                    <button
+                      onClick={() => item.qty > 1 && updateQty(item._id, item.qty - 1)}
+                      className="px-3 py-1 bg-gray-200 rounded-full text-gray-700 hover:bg-gray-300"
+                    >
+                      -
+                    </button>
+
+                    <span className="text-lg font-semibold">{item.qty}</span>
+
+                    <button
+                      onClick={() => item.qty < item.stock && updateQty(item._id, item.qty + 1)}
+                      className="px-3 py-1 bg-gray-200 rounded-full text-gray-700 hover:bg-gray-300"
+                    >
+                      +
+                    </button>
+                  </div>
+
+                  {/* Remove Button */}
+                  <button
+                    onClick={() => removeItem(item._id)}
+                    className="text-red-600 font-semibold ml-4 hover:text-red-800"
+                  >
+                    Remove
+                  </button>
+                </div>
+              ))}
+            </div>
+          </>
+        )}
+      </div>
+    </>
+  );
 }
 
 export default Cart;

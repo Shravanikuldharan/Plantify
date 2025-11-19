@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import axios from "axios";
-import plantCareConfig from "../Config/PlantCareConfig.js";
+import { plantCareConfig, getCategoryTagline } from "../Config/PlantCareConfig.js";
 
 function PlantDetails() {
   const { slug } = useParams();
@@ -45,9 +45,15 @@ function PlantDetails() {
           {plant.name}
         </h1>
 
-        <span className="inline-block bg-green-100 text-green-700 px-3 py-2 rounded-full text-sm font-medium mb-4">
+       {/* category badge */}
+        <span className="inline-block bg-green-100 text-green-700 px-3 py-2 rounded-full text-sm font-medium mb-2">
           {plant.category}
         </span>
+
+        {/* tagline */}
+        <p className="text-gray-500 italic mb-4">
+          {getCategoryTagline(plant.category)}
+        </p>
 
         <p className="text-4xl font-semibold text-green-700 mb-5">
           ₹{plant.price}

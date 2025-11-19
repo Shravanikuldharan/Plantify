@@ -205,4 +205,74 @@ const plantCareConfig = {
   ],
 };
 
-export default plantCareConfig;
+
+const plantTaglines = {
+  Indoor: [
+    "Perfect for any room",
+    "Low-light friendly companion",
+    "Bring nature inside your home",
+  ],
+
+  Outdoor: [
+    "Loves the open sky",
+    "Thrives in sunlight",
+    "Perfect for balconies & gardens",
+  ],
+
+  Flowering: [
+    "Bright blooms for your home",
+    "Colorful flowers all season",
+    "Make your space vibrant",
+  ],
+
+  Succulent: [
+    "Loves sunlight and minimal water",
+    "Low-maintenance beauty",
+    "Perfect for desks and shelves",
+  ],
+
+  "Air Purifying": [
+    "Cleans your indoor air naturally",
+    "Freshens your living space",
+    "Ideal for bedrooms & offices",
+  ],
+
+  Herbal: [
+    "Fresh aroma for your kitchen",
+    "Healthy and natural herbs",
+    "Grow your own herbal garden",
+  ],
+
+  Fruit: [
+    "Sweet and fresh home-grown fruits",
+    "Perfect for sunny areas",
+    "Grow your mini orchard at home",
+  ],
+
+  Bonsai: [
+    "Artistic miniature tree",
+    "Perfect for decor enthusiasts",
+    "Symbol of patience & balance",
+  ],
+
+  Seasonal: [
+    "Perfect color for the season",
+    "Short but beautiful life cycle",
+    "Blooms that match the weather",
+  ],
+
+  Climber: [
+    "Grows beautifully with support",
+    "Perfect for walls & trellises",
+    "Bring vertical greenery home",
+  ],
+};
+
+// this unction returns a random tagline for any category
+const getCategoryTagline = (category) => {
+  const list = plantTaglines[category];
+  if (!list) return "";
+  return list[Math.floor(Math.random() * list.length)];
+};
+
+export { plantCareConfig, getCategoryTagline };

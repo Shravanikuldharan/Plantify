@@ -45,9 +45,18 @@ const plantSchema = new Schema(
       type: Number,
       default: 10,
     },
+    saleDiscount: {
+      type: Number,
+      default: 0,
+    },
+
+    saleBadge: {
+      type: Boolean,
+      default: false,
+    },
 
     image: {
-      type: String, 
+      type: String,
       required: true,
     },
   },

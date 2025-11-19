@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 
 function AddPlant() {
+
   const [plant, setPlant] = useState({
     name: "",
     description: "",
@@ -9,6 +10,8 @@ function AddPlant() {
     category: "",
     stock: "",
     image: "",
+    saleDiscount: 0,
+    saleBadge: false,
   });
 
   const [error, setError] = useState("");
@@ -18,9 +21,8 @@ function AddPlant() {
     setError("");
     setSuccess("");
 
-    const { name, description, price, category, stock, image } = plant;
+    const { name, description, price, category, stock, image, saleBadge, saleDiscount } = plant;
 
-    // basic validation
     if (!name || !description || !price || !category || !image) {
       setError("All fields except stock are required");
       return;
@@ -38,6 +40,8 @@ function AddPlant() {
           category,
           stock,
           image,
+          saleBadge,
+          saleDiscount,
         },
         {
           headers: {
@@ -49,7 +53,6 @@ function AddPlant() {
       setSuccess("Plant added successfully!");
       console.log(res.data);
 
-      // Clear form
       setPlant({
         name: "",
         description: "",
@@ -57,6 +60,8 @@ function AddPlant() {
         category: "",
         stock: "",
         image: "",
+        saleDiscount: 0,
+        saleBadge: false,
       });
 
     } catch (err) {
@@ -75,14 +80,14 @@ function AddPlant() {
           placeholder="Plant Name"
           value={plant.name}
           onChange={(e) => setPlant({ ...plant, name: e.target.value })}
-          className="w-full p-3 mb-3 rounded border border-gray-300 outline-none focus:ring-2 focus:ring-green-500"
+          className="w-full p-3 mb-3 border rounded"
         />
 
         <textarea
           placeholder="Description"
           value={plant.description}
           onChange={(e) => setPlant({ ...plant, description: e.target.value })}
-          className="w-full p-3 mb-3 rounded border border-gray-300 outline-none h-24 focus:ring-2 focus:ring-green-500"
+          className="w-full p-3 mb-3 border rounded h-24"
         />
 
         <input
@@ -90,13 +95,13 @@ function AddPlant() {
           placeholder="Price"
           value={plant.price}
           onChange={(e) => setPlant({ ...plant, price: e.target.value })}
-          className="w-full p-3 mb-3 rounded border border-gray-300 outline-none focus:ring-2 focus:ring-green-500"
+          className="w-full p-3 mb-3 border rounded"
         />
 
         <select
           value={plant.category}
           onChange={(e) => setPlant({ ...plant, category: e.target.value })}
-          className="w-full p-3 mb-3 rounded border border-gray-300 outline-none focus:ring-2 focus:ring-green-500"
+          className="w-full p-3 mb-3 border rounded"
         >
           <option value="">Select Category</option>
           <option value="Indoor">Indoor</option>
@@ -116,27 +121,43 @@ function AddPlant() {
           placeholder="Stock"
           value={plant.stock}
           onChange={(e) => setPlant({ ...plant, stock: e.target.value })}
-          className="w-full p-3 mb-3 rounded border border-gray-300 outline-none focus:ring-2 focus:ring-green-500"
+          className="w-full p-3 mb-3 border rounded"
         />
 
-        {/* Image URL */}
+        {/* Discount */}
+        <input
+          type="number"
+          placeholder="Sale Discount (%)"
+          value={plant.saleDiscount}
+          onChange={(e) => setPlant({ ...plant, saleDiscount: e.target.value })}
+          className="w-full p-3 mb-3 border rounded"
+        />
+
+        {/* Show Sale Badge */}
+        <div className="flex items-center gap-2 mb-3">
+          <input
+            type="checkbox"
+            checked={plant.saleBadge}
+            onChange={() => setPlant({ ...plant, saleBadge: !plant.saleBadge })}
+          />
+          <label>Show Sale Badge</label>
+        </div>
+
+        {/* Image */}
         <input
           type="text"
           placeholder="Image URL"
           value={plant.image}
           onChange={(e) => setPlant({ ...plant, image: e.target.value })}
-          className="w-full p-3 mb-3 rounded border border-gray-300 outline-none focus:ring-2 focus:ring-green-500"
+          className="w-full p-3 mb-3 border rounded"
         />
 
-        {/* Error */}
         {error && <p className="text-red-500 text-sm mb-2">* {error}</p>}
-
-        {/* Success */}
         {success && <p className="text-green-600 text-sm mb-2">{success}</p>}
 
         <button
           onClick={handleAddPlant}
-          className="w-full bg-green-600 text-white py-3 rounded-md font-semibold hover:bg-green-700 transition"
+          className="w-full bg-green-600 text-white py-3 rounded hover:bg-green-700"
         >
           Add Plant
         </button>

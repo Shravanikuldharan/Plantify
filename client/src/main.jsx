@@ -15,6 +15,7 @@ import AdminRoute from './Components/AdminRoute';
 import NotFound from './Views/NotFound';
 import ManagePlants from './Views/Admin/ManagePlants';
 import EditPlant from './Views/Admin/EditPlant';
+import Profile from './Views/Profile';
 
 createRoot(document.getElementById('root')).render(
     <BrowserRouter>
@@ -27,6 +28,7 @@ createRoot(document.getElementById('root')).render(
             <Route path="/plants" element={<AllPlants />} />
             <Route path="/plants/slug/:slug" element={<PlantDetails />} />
             <Route path="*" element={<NotFound/>} />
+            <Route path={"/profile"} element={<Profile />} />
 
             {/* Admin Routes */}
             <Route path="/admin/dashboard" element={<AdminRoute><AdminDashboard /></AdminRoute>} />

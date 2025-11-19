@@ -249,4 +249,23 @@ const getAllUsers = async (req, res) => {
   }
 };
 
-export { postSignup, postLogin, getAllUsers };
+const updateUser = async (req, res) => {
+  try {
+    const updated = await User.findByIdAndUpdate(
+      req.params.id,
+      {
+        name: req.body.name,
+        phone: req.body.phone,
+        address: req.body.address,
+      },
+      { new: true }
+    ).select("-password");
+
+    res.json({ success: true, user: updated });
+  } catch (err) {
+    res.status(500).json({ success: false, message: "Update failed" });
+  }
+};
+
+
+export { postSignup, postLogin, getAllUsers, updateUser };

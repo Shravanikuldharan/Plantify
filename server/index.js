@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
-import { getAllUsers, postLogin, postSignup } from "./Controllers/user.js";
+import { getAllUsers, postLogin, postSignup, updateUser } from "./Controllers/user.js";
 import { addPlant, deletePlant, getPlantById, getPlantBySlug, getPlants, updatePlant } from "./Controllers/Plant.js";
 import jwtCheck from "./Middleware/jwtCheck.js";
 import adminCheck from "./Middleware/adminCheck.js";
@@ -38,6 +38,7 @@ app.get("/plants/:id", getPlantById);
 
 app.post("/signup", postSignup);
 app.post("/login", postLogin);
+app.put("/users/:id", jwtCheck, updateUser);
 
 app.get("/", (req, res) => {
   res.json({

@@ -96,10 +96,17 @@ function Navbar() {
                   >
                     Profile
                   </Link>
+
                   <Link 
                     to="/wishlist" 
                       className="block px-4 py-2 hover:bg-gray-100 text-gray-700 transition">
                     Wishlist
+                  </Link>
+
+                  <Link 
+                    to="/my-orders" 
+                      className="block px-4 py-2 hover:bg-gray-100 text-gray-700 transition">
+                    My Orders
                   </Link>
 
                   <button

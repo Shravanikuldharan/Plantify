@@ -17,6 +17,9 @@ import ManagePlants from './Views/Admin/ManagePlants';
 import EditPlant from './Views/Admin/EditPlant';
 import Profile from './Views/Profile';
 import Wishlist from './Views/Wishlist';
+import Order from './Views/Order';
+import MyOrders from './Views/MyOrders';
+import ManageOrders from './Views/Admin/ManageOrders';
 
 createRoot(document.getElementById('root')).render(
     <BrowserRouter>
@@ -31,7 +34,8 @@ createRoot(document.getElementById('root')).render(
             <Route path="*" element={<NotFound/>} />
             <Route path={"/profile"} element={<Profile />} />
             <Route path="/wishlist" element={<Wishlist />} />
-
+            <Route path="/order" element={<Order />} />
+            <Route path="/my-orders" element={<MyOrders />} />
 
             {/* Admin Routes */}
             <Route path="/admin/dashboard" element={<AdminRoute><AdminDashboard /></AdminRoute>} />
@@ -39,6 +43,7 @@ createRoot(document.getElementById('root')).render(
             <Route path="/admin/add-plant" element={<AdminRoute><AddPlant /></AdminRoute>} />
             <Route path="/admin/manage-plants" element={<AdminRoute><ManagePlants /></AdminRoute>} />
             <Route path="/admin/edit-plant/:id" element={<AdminRoute><EditPlant /></AdminRoute>} />
+            <Route path="/admin/manage-orders" element={<AdminRoute><ManageOrders /></AdminRoute>} />
         </Routes>
     </BrowserRouter>
 )

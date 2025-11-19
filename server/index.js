@@ -8,6 +8,7 @@ import { addToCart, getCart, removeFromCart } from "./Controllers/Cart.js";
 import jwtCheck from "./Middleware/jwtCheck.js";
 import adminCheck from "./Middleware/adminCheck.js";
 import { addWishlist, getWishlist, removeWishlist } from "./Controllers/Wishlist.js";
+import { cancelOrder, getAllOrders, getUserOrders, placeOrder, updateOrderStatus } from "./Controllers/Order.js";
 
 const app = express();
 
@@ -33,6 +34,8 @@ app.get("/users",jwtCheck, adminCheck, getAllUsers);
 app.post("/plants/add",jwtCheck, adminCheck, addPlant);
 app.delete("/plants/:id",jwtCheck, adminCheck, deletePlant);
 app.put("/plants/:id",jwtCheck, adminCheck, updatePlant);
+app.get("/admin/orders", jwtCheck, adminCheck, getAllOrders);
+app.put("/admin/order/update/:id", jwtCheck, adminCheck, updateOrderStatus);
 
 app.get("/plants/slug/:slug", getPlantBySlug);
 app.get("/plants", getPlants);
@@ -41,6 +44,10 @@ app.get("/plants/:id", getPlantById);
 app.post("/cart/add", jwtCheck, addToCart);
 app.get("/cart", jwtCheck, getCart);
 app.delete("/cart/remove/:id", jwtCheck, removeFromCart);
+
+app.post("/order/place", jwtCheck, placeOrder);
+app.get("/order/my-orders", jwtCheck, getUserOrders);
+app.put("/order/cancel/:id", jwtCheck, cancelOrder);
 
 app.post("/wishlist/add", jwtCheck, addWishlist);
 app.post("/wishlist/remove", jwtCheck, removeWishlist);

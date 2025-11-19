@@ -50,13 +50,15 @@ function AdminDashboard() {
             </div>
           </Link>
 
-          <div className="p-6 bg-white rounded-xl shadow hover:shadow-lg cursor-pointer hover:scale-[1.02] transition">
-            <FaShoppingCart className="text-purple-600 text-4xl mb-4" />
-            <h2 className="text-xl font-bold mb-2">View Orders</h2>
-            <p className="text-sm text-gray-600">
-              Check recent orders from customers.
-            </p>
-          </div>
+          <Link to="/admin/manage-orders">
+            <div className="p-6 bg-white rounded-xl shadow hover:shadow-lg cursor-pointer hover:scale-[1.02] transition">
+              <FaShoppingCart className="text-blue-600 text-4xl mb-4" />
+              <h2 className="text-xl font-bold mb-2">Manage Orders</h2>
+              <p className="text-sm text-gray-600">
+                View and update customer orders.
+              </p>
+            </div>
+          </Link>
 
           <div
             onClick={() => {

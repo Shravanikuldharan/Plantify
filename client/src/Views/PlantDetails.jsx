@@ -35,7 +35,7 @@ function PlantDetails() {
         const already = wishRes.data.wishlist.some(
           (item) => item.plant._id === res.data.plant._id
         );
-        setWished(already); 
+        setWished(already);
       }
 
     } catch (error) {
@@ -98,6 +98,27 @@ function PlantDetails() {
     } catch (err) {
       console.log(err);
       alert("Error updating wishlist");
+    }
+  };
+
+  const placeOrder = async () => {
+    const token = localStorage.getItem("token");
+
+    try {
+      const res = await axios.post(
+        `${import.meta.env.VITE_API_URL}/order/place`,
+        {
+          address: JSON.parse(localStorage.getItem("loggedInUser")).address,
+          paymentMethod: "COD",
+        },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      alert("Order placed successfully!");
+      window.location.href = "/my-orders";
+    } catch (err) {
+      console.log(err);
+      alert("Order failed");
     }
   };
 
@@ -180,9 +201,15 @@ function PlantDetails() {
                 Add to Cart
               </button>
 
-              <button className="bg-orange-500 text-white px-8 py-3 rounded-lg font-semibold text-lg shadow-md hover:bg-orange-600 hover:scale-[1.02] transition">
+              <button
+                onClick={() =>
+                  window.location.href = `/order?slug=${plant.slug}&qty=${qty}`
+                }
+                className="bg-orange-500 text-white px-8 py-3 rounded-lg"
+              >
                 Buy Now
               </button>
+
             </div>
 
             <p className="mt-4 text-gray-500 text-sm">

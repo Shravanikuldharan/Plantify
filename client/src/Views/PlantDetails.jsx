@@ -3,11 +3,13 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { plantCareConfig, getCategoryTagline } from "../Config/PlantCareConfig.js";
 import Navbar from "../Components/Navbar.jsx";
+import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 
 function PlantDetails() {
   const { slug } = useParams();
   const [plant, setPlant] = useState(null);
   const [qty, setQty] = useState(1);
+  const [wished, setWished] = useState(false);
   const [tagline, setTagline] = useState('');
 
   useEffect(() => {
@@ -19,8 +21,23 @@ function PlantDetails() {
       const res = await axios.get(
         `${import.meta.env.VITE_API_URL}/plants/slug/${slug}`
       );
+
       setPlant(res.data.plant);
       setTagline(getCategoryTagline(res.data.plant.category));
+
+      const token = localStorage.getItem("token");
+      if (token) {
+        const wishRes = await axios.get(
+          `${import.meta.env.VITE_API_URL}/wishlist`,
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+
+        const already = wishRes.data.wishlist.some(
+          (item) => item.plant._id === res.data.plant._id
+        );
+        setWished(already); 
+      }
+
     } catch (error) {
       console.log("Error fetching plant:", error);
     }
@@ -63,17 +80,49 @@ function PlantDetails() {
     }
   };
 
+  const toggleWishlist = async () => {
+    const token = localStorage.getItem("token");
+    if (!token) return alert("Please login first!");
+
+    try {
+      const endpoint = wished ? "/wishlist/remove" : "/wishlist/add";
+
+      const res = await axios.post(
+        `${import.meta.env.VITE_API_URL}${endpoint}`,
+        { plantId: plant._id },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      setWished(!wished);
+      alert(res.data.message);
+    } catch (err) {
+      console.log(err);
+      alert("Error updating wishlist");
+    }
+  };
+
   return (
     <>
       <Navbar />
       <div className="max-w-7xl mx-auto p-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-          <div className="space-y-4">
+          <div className="relative space-y-4">
             <img
               src={plant.image}
               alt={plant.name}
               className="w-full h-[420px] object-cover rounded-xl shadow-xl border"
             />
+
+            <button
+              onClick={toggleWishlist}
+              className="absolute top-4 right-4 bg-white p-3 rounded-full shadow-md hover:bg-pink-100 transition flex items-center justify-center"
+            >
+              {wished ? (
+                <AiFillHeart className="text-pink-600 text-2xl" />
+              ) : (
+                <AiOutlineHeart className="text-pink-600 text-2xl" />
+              )}
+            </button>
           </div>
 
           <div className="flex flex-col justify-start">

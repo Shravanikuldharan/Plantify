@@ -7,6 +7,7 @@ import { addPlant, deletePlant, getPlantById, getPlantBySlug, getPlants, updateP
 import { addToCart, getCart, removeFromCart } from "./Controllers/Cart.js";
 import jwtCheck from "./Middleware/jwtCheck.js";
 import adminCheck from "./Middleware/adminCheck.js";
+import { addWishlist, getWishlist, removeWishlist } from "./Controllers/Wishlist.js";
 
 const app = express();
 
@@ -40,6 +41,10 @@ app.get("/plants/:id", getPlantById);
 app.post("/cart/add", jwtCheck, addToCart);
 app.get("/cart", jwtCheck, getCart);
 app.delete("/cart/remove/:id", jwtCheck, removeFromCart);
+
+app.post("/wishlist/add", jwtCheck, addWishlist);
+app.post("/wishlist/remove", jwtCheck, removeWishlist);
+app.get("/wishlist", jwtCheck, getWishlist);
 
 app.post("/signup", postSignup);
 app.post("/login", postLogin);

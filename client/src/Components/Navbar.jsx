@@ -37,8 +37,7 @@ function Navbar() {
   const userInitial = user?.name?.charAt(0)?.toUpperCase();
 
   const navLinkStyle = (path) =>
-    `relative hover:text-green-700 transition ${
-      location.pathname === path ? "text-green-700 font-semibold" : ""
+    `relative hover:text-green-700 transition ${location.pathname === path ? "text-green-700 font-semibold" : ""
     }`;
 
   return (
@@ -96,6 +95,11 @@ function Navbar() {
                     className="block px-4 py-2 hover:bg-gray-100 text-gray-700 transition"
                   >
                     Profile
+                  </Link>
+                  <Link 
+                    to="/wishlist" 
+                      className="block px-4 py-2 hover:bg-gray-100 text-gray-700 transition">
+                    Wishlist
                   </Link>
 
                   <button

@@ -16,6 +16,7 @@ import NotFound from './Views/NotFound';
 import ManagePlants from './Views/Admin/ManagePlants';
 import EditPlant from './Views/Admin/EditPlant';
 import Profile from './Views/Profile';
+import Wishlist from './Views/Wishlist';
 
 createRoot(document.getElementById('root')).render(
     <BrowserRouter>
@@ -29,6 +30,8 @@ createRoot(document.getElementById('root')).render(
             <Route path="/plants/slug/:slug" element={<PlantDetails />} />
             <Route path="*" element={<NotFound/>} />
             <Route path={"/profile"} element={<Profile />} />
+            <Route path="/wishlist" element={<Wishlist />} />
+
 
             {/* Admin Routes */}
             <Route path="/admin/dashboard" element={<AdminRoute><AdminDashboard /></AdminRoute>} />

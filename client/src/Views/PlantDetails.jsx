@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { plantCareConfig, getCategoryTagline } from "../Config/PlantCareConfig.js";
 import Navbar from "../Components/Navbar.jsx";
 
 function PlantDetails() {
-  const { slug } = useParams();
+  const { slug } = useParams(); 
   const [plant, setPlant] = useState(null);
   const [qty, setQty] = useState(1);
   const [tagline, setTagline] = useState('');  
@@ -20,7 +20,7 @@ function PlantDetails() {
         `${import.meta.env.VITE_API_URL}/plants/slug/${slug}`
       );
       setPlant(res.data.plant);  
-      setTagline(getCategoryTagline(res.data.plant.category));  
+      setTagline(getCategoryTagline(res.data.plant.category)); 
     } catch (error) {
       console.log("Error fetching plant:", error);
     }
@@ -44,6 +44,7 @@ function PlantDetails() {
     } else {
       cart.push({
         _id: plant._id,
+        slug: plant.slug,  
         name: plant.name,
         image: plant.image,
         price: discountedPrice,
@@ -87,7 +88,7 @@ function PlantDetails() {
             </span>
 
             <p className="text-gray-500 italic mb-4">
-              {tagline}
+              {tagline} 
             </p>
 
             <p className="text-4xl font-semibold text-green-700 mb-5">
@@ -132,14 +133,14 @@ function PlantDetails() {
             </div>
 
             <p className="mt-4 text-gray-500 text-sm">
-               In Stock: <span className="font-semibold">{plant.stock}</span>
+              In Stock: <span className="font-semibold">{plant.stock}</span>
             </p>
           </div>
         </div>
 
         <div className="mt-16 bg-white/70 backdrop-blur-md shadow-xl border rounded-xl p-6">
           <h2 className="text-3xl font-bold mb-6 text-gray-800">
-             Plant Care Guide
+            Plant Care Guide
           </h2>
 
           {plantCareConfig[plant.category]?.map((item, index) => (

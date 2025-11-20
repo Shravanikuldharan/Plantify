@@ -80,7 +80,7 @@ function Navbar() {
           <div className="relative" ref={dropdownRef}>
             <button
               onClick={() => setDropdownOpen(!dropdownOpen)}
-              className="bg-green-600 text-white w-11 h-11 rounded-full flex items-center justify-center text-lg font-bold hover:bg-green-700 shadow-lg hover:shadow-xl transition duration-200"
+              className="bg-green-600 cursor-pointer  text-white w-11 h-11 rounded-full flex items-center justify-center text-lg font-bold shadow-lg hover:shadow-xl transition duration-200"
             >
               {userInitial}
             </button>

@@ -95,7 +95,7 @@ function AllPlants() {
           <button
             onClick={() => setActiveCategory("All")}
             className={`
-                px-4 py-2 rounded-full text-sm font-medium 
+                px-4 py-2 rounded-full text-md font-semibold 
                 transition-all duration-300 shadow-sm cursor-pointer
                 ${activeCategory === "All"
                 ? "bg-green-600 text-white shadow-md cursor-pointer"
@@ -111,7 +111,7 @@ function AllPlants() {
               key={cat}
               onClick={() => setActiveCategory(cat)}
               className={`
-                  px-4 py-2 rounded-full text-sm font-medium 
+                  px-4 py-2 rounded-full text-md font-semibold 
                   transition-all duration-300 shadow-sm cursor-pointer
                   ${activeCategory === cat
                   ? "bg-green-600 text-white shadow-md cursor-pointer"

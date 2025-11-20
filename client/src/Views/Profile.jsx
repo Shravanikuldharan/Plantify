@@ -94,7 +94,7 @@ function Profile() {
 
                             {/* name */}
                             <div>
-                                <p className="text-gray-600 font-medium mb-1">Name</p>
+                                <p className="text-gray-600 font-semibold mb-1">Name</p>
                                 {!editing ? (
                                     <div className="bg-gray-100 p-3 rounded-lg">{user.name}</div>
                                 ) : (
@@ -110,7 +110,7 @@ function Profile() {
 
                             {/* phone */}
                             <div>
-                                <p className="text-gray-600 font-medium mb-1">Mobile No</p>
+                                <p className="text-gray-600 font-semibold mb-1">Mobile No</p>
                                 {!editing ? (
                                     <div className="bg-gray-100 p-3 rounded-lg">{user.phone}</div>
                                 ) : (
@@ -126,7 +126,7 @@ function Profile() {
 
                             {/* address */}
                             <div className="md:col-span-2">
-                                <p className="text-gray-600 font-medium mb-1">Address</p>
+                                <p className="text-gray-600 font-semibold mb-1">Address</p>
                                 {!editing ? (
                                     <div className="bg-gray-100 p-3 rounded-lg">
                                         {user.address || "No address added"}
@@ -144,7 +144,7 @@ function Profile() {
                             </div>
 
                             <div>
-                                <p className="text-gray-600 font-medium mb-1">Role</p>
+                                <p className="text-gray-600 font-semibold mb-1">Role</p>
                                 <div className="bg-gray-100 p-3 rounded-lg">{user.role}</div>
                             </div>
                         </div>
@@ -153,7 +153,7 @@ function Profile() {
                             <div className="flex justify-end mt-6">
                                 <button
                                     onClick={handleUpdate}
-                                    className="cursor-pointer bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition shadow"
+                                    className="cursor-pointer bg-green-600 text-white font-bold px-6 py-3 rounded-lg hover:bg-green-700 transition shadow"
                                 >
                                     {saving ? "Saving..." : "Save Changes"}
                                 </button>

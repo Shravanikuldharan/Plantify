@@ -50,7 +50,6 @@ const StatsSection = () => {
                     >
                         <img
                             src={stat.icon}
-                            alt={stat.label}
                             className="w-14 h-14 transition duration-300"
                         />
 
@@ -58,7 +57,7 @@ const StatsSection = () => {
                             {counts[index]}+
                         </h2>
 
-                        <p className="text-gray-700 text-sm mt-4 tracking-wide">
+                        <p className="text-gray-700 text-lg font-semibold mt-4 tracking-wide">
                             {stat.label}
                         </p>
                     </div>

@@ -51,7 +51,7 @@ function Navbar() {
         </h1>
       </Link>
 
-      <div className="hidden md:flex items-center text-[18px] space-x-8 text-gray-700 font-medium">
+      <div className="hidden md:flex items-center text-[18px] font-semibold space-x-8 text-gray-700 font-medium">
 
         <Link to="/" className={navLinkStyle("/") + " hover:text-green-700"}>
           Home

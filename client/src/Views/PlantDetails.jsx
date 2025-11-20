@@ -163,7 +163,7 @@ function PlantDetails() {
                     </button>
 
                     <div className="max-h-0 overflow-hidden transition-all duration-300 border-t bg-gray-50">
-                      <p className="p-4 text-gray-700 text-[15px] leading-relaxed">
+                      <p className="p-4 text-gray-700 text-[15px] font-semibold leading-relaxed">
                         {item.description}
                       </p>
                     </div>
@@ -192,7 +192,7 @@ function PlantDetails() {
                 </span>
               )}
               <span className="text-4xl font-bold text-green-700">
-                ₹{discountedPrice}
+                ₹ {discountedPrice}
               </span>
             </div>
 
@@ -202,9 +202,9 @@ function PlantDetails() {
               </p>
             )}
 
-            <p className="text-gray-500 text-sm mb-4">Inclusive of all taxes</p>
+            <p className="text-gray-500 text-md mb-4">Inclusive of all taxes</p>
 
-            <p className="text-gray-700 text-[15px] leading-relaxed mb-6 w-[90%]">
+            <p className="text-gray-700 text-[15px] font-semibold leading-relaxed mb-6 w-[90%]">
               {plant.description}
             </p>
 
@@ -252,7 +252,7 @@ function PlantDetails() {
                 Delivery Details
               </h3>
 
-              <ul className="text-md text-gray-700 space-y-2 leading-relaxed">
+              <ul className="text-md font-semibold text-gray-700 space-y-2 leading-relaxed">
                 <li>• Delivery in <span className="font-semibold">3–5 business days</span></li>
                 <li>• Free replacement if the plant is damaged</li>
                 <li>• Eco-friendly packaging and safe delivery</li>

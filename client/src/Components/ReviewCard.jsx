@@ -24,7 +24,7 @@ function ReviewCard({ name, review, rating, profile }) {
         group-hover:h-32
       "></div>
 
-      <p className="text-gray-700 text-sm text-center leading-relaxed mb-4 relative z-10">
+      <p className="text-gray-700 text-md font-[400px] text-center leading-relaxed mb-4 relative z-10">
         “{review}”
       </p>
 

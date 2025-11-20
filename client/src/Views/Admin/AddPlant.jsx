@@ -1,6 +1,8 @@
 import { useState } from "react";
 import axios from "axios";
 import AdminLayout from "../../Components/AdminLayout";
+import Swal from "sweetalert2";
+import toast, { Toaster } from "react-hot-toast";
 
 function AddPlant() {
   const [plant, setPlant] = useState({
@@ -21,10 +23,14 @@ function AddPlant() {
     setError("");
     setSuccess("");
 
-    const { name, description, price, category, stock, image, saleBadge, saleDiscount } = plant;
+    const { name, description, price, category, image } = plant;
 
     if (!name || !description || !price || !category || !image) {
-      setError("All fields except stock are required");
+      Swal.fire({
+        icon: "error",
+        title: "Missing Details",
+        text: "All fields except stock are required",
+      });
       return;
     }
 
@@ -33,20 +39,16 @@ function AddPlant() {
 
       await axios.post(
         `${import.meta.env.VITE_API_URL}/plants/add`,
-        {
-          name,
-          description,
-          price,
-          category,
-          stock,
-          image,
-          saleBadge,
-          saleDiscount,
-        },
+        plant,
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
-      setSuccess("Plant added successfully!");
+      Swal.fire({
+        icon: "success",
+        title: "Plant Added Successfully!",
+        showConfirmButton: false,
+        timer: 2000,
+      });
 
       setPlant({
         name: "",
@@ -60,12 +62,13 @@ function AddPlant() {
       });
 
     } catch (err) {
-      setError(err.response?.data?.message || "Something went wrong!");
+      toast.error(err.response?.data?.message || "Something went wrong!");
     }
   };
 
   return (
     <AdminLayout title="Add New Plant">
+      <Toaster position="top-right" />
 
       <div className="max-w-3xl bg-white p-10 rounded-xl shadow-lg">
 
@@ -166,7 +169,7 @@ function AddPlant() {
               placeholder="Write short description..."
             ></textarea>
           </div>
-          
+
         </div>
 
         {error && <p className="text-red-600 mt-4 font-medium">{error}</p>}

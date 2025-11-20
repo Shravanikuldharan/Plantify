@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import AdminLayout from "../../Components/AdminLayout";
+import Swal from "sweetalert2";
+import toast, { Toaster } from "react-hot-toast";
 
 function ManageOrders() {
   const [orders, setOrders] = useState([]);
@@ -16,9 +18,10 @@ function ManageOrders() {
         }
       );
 
-      setOrders(res.data.orders);
+      setOrders(res.data.orders || []);
     } catch (err) {
       console.log("Error:", err);
+      toast.error("Failed to load orders");
     }
   };
 
@@ -36,20 +39,26 @@ function ManageOrders() {
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
+      Swal.fire({
+        icon: "success",
+        title: "Status Updated!",
+        timer: 1500,
+        showConfirmButton: false
+      });
+
       loadOrders();
     } catch (err) {
       console.log(err);
-      alert("Failed to update status");
+      toast.error("Failed to update status");
     }
   };
 
   return (
-    <AdminLayout title="Manage Orders">  
+    <AdminLayout title="Manage Orders">
+      <Toaster position="top-right" />
 
       {orders.length === 0 ? (
-        <p className="text-center text-gray-600 text-lg">
-          No orders found
-        </p>
+        <p className="text-center text-gray-600 text-lg">No orders found</p>
       ) : (
         <div className="overflow-x-auto shadow-lg border rounded-xl bg-white">
 
@@ -75,45 +84,53 @@ function ManageOrders() {
 
                   {/* cust */}
                   <td className="p-4">
-                    <p className="font-semibold">{order.address.fullName}</p>
-                    <p className="text-gray-600 text-xs">{order.address.mobile}</p>
+                    <p className="font-semibold">{order.address?.fullName}</p>
+                    <p className="text-gray-600 text-xs">{order.address?.mobile}</p>
                   </td>
 
-                  {/* address */}
+                  {/* Address */}
                   <td className="p-4">
-                    {order.address.addressLine},<br />
-                    {order.address.city}
+                    {order.address?.addressLine},<br />
+                    {order.address?.city}
                   </td>
 
-                  {/* items */}
+                 {/* items */}
                   <td className="p-4">
-                    {order.items.map((item) => (
-                      <div key={item._id} className="flex gap-3 mb-3 items-center">
-                        <img
-                          src={item.plant.image}
-                          className="w-12 h-12 rounded object-cover"
-                        />
-                        <div>
-                          <p className="font-medium">{item.plant.name}</p>
-                          <p className="text-xs text-gray-500">
-                            Qty: {item.qty} | ₹{item.price}
-                          </p>
+                    {order.items.map((item) => {
+                      const plant = item.plant; 
+
+                      return (
+                        <div key={item._id} className="flex gap-3 mb-3 items-center">
+                          
+                          <img
+                            src={plant?.image || "https://via.placeholder.com/80?text=No+Image"}
+                            className="w-12 h-12 rounded object-cover bg-gray-200"
+                          />
+
+                          <div>
+                            <p className="font-medium">
+                              {plant?.name || "Plant Removed"}
+                            </p>
+
+                            <p className="text-xs text-gray-500">
+                              Qty: {item.qty} | ₹{item.price}
+                            </p>
+                          </div>
+
                         </div>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </td>
 
-                  {/* total */}
                   <td className="p-4 font-semibold text-green-600">
                     ₹{order.totalAmount}
                   </td>
 
-                  {/* date */}
                   <td className="p-4">
                     {new Date(order.createdAt).toLocaleDateString()}
                   </td>
 
-                  {/* dropdoen status */}
+                  {/* Status Dropdown */}
                   <td className="p-4">
                     <select
                       className="border rounded-lg px-3 py-2 bg-white focus:ring-2 focus:ring-green-500 outline-none"

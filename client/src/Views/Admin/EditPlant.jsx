@@ -2,9 +2,11 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import axios from "axios";
 import AdminLayout from "../../Components/AdminLayout";
+import toast, { Toaster } from "react-hot-toast";
 
 function EditPlant() {
   const { id } = useParams();
+
   const [plant, setPlant] = useState({
     name: "",
     description: "",
@@ -26,6 +28,7 @@ function EditPlant() {
       setLoading(false);
     } catch (err) {
       console.error("Error loading plant:", err);
+      toast.error("Failed to load plant!");
     }
   };
 
@@ -41,11 +44,15 @@ function EditPlant() {
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
-      alert("Plant updated successfully!");
-      window.location.href = "/admin/manage-plants";
+      toast.success("Plant updated successfully!");
+
+      setTimeout(() => {
+        window.location.href = "/admin/manage-plants";
+      }, 1200);
+
     } catch (err) {
       console.error("Update error:", err);
-      alert("Failed to update plant");
+      toast.error("Failed to update plant!");
     }
   };
 
@@ -53,6 +60,7 @@ function EditPlant() {
 
   return (
     <AdminLayout title="Edit Plant">
+      <Toaster position="top-center" />
 
       <div className="max-w-3xl bg-white p-10 rounded-xl shadow-lg">
 
@@ -146,6 +154,7 @@ function EditPlant() {
               className="w-full p-3 border rounded-lg h-28 focus:ring-2 focus:ring-blue-500 outline-none"
             ></textarea>
           </div>
+
         </div>
 
         <button
@@ -155,7 +164,6 @@ function EditPlant() {
           Update Plant
         </button>
       </div>
-
     </AdminLayout>
   );
 }

@@ -1,51 +1,5 @@
 import Plant from "../Models/Plant.js";
 
-// add plant slug
-// const addPlant = async (req, res) => {
-//   try {
-//     const { name, description, price, category, stock, image } = req.body;
-
-//     if (!name || !description || !price || !category || !image) {
-//       return res.status(400).json({
-//         success: false,
-//         message: "All fields except stock are required",
-//       });
-//     }
-
-//     const newPlant = new Plant({
-//       name,
-//       description,
-//       price,
-//       category,
-//       stock,
-//       image,
-//       slug: `temp-${Date.now()}-${Math.random().toString()}`,
-//     });
-
-//     const savedPlant = await newPlant.save();
-
-//     const finalSlug = `${name.toLowerCase().replace(/ /g, "-")}-${savedPlant._id}`
-//       .replace(/[^\w-]+/g, "");
-
-//     savedPlant.slug = finalSlug;
-
-//     await savedPlant.save();
-
-//     res.json({
-//       success: true,
-//       message: "Plant added successfully",
-//       plant: savedPlant,
-//     });
-//   } catch (error) {
-//     console.log(error);
-
-//     return res.status(500).json({
-//       success: false,
-//       message: "Server error",
-//     });
-//   }
-// };
-
 const addPlant = async (req, res) => {
   try {
     const { name, description, price, category, stock, image, saleDiscount, saleBadge } = req.body;

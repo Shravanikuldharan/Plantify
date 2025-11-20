@@ -23,20 +23,33 @@ function ManagePlants() {
   }, []);
 
   const handleDelete = async (id) => {
-    if (!confirm("Are you sure?")) return;
+  // ➤ Step 1: SweetAlert confirmation box
+  const confirmDelete = await Swal.fire({
+    title: "Are you sure?",
+    text: "This action cannot be undone!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#d33",
+    cancelButtonColor: "#3085d6",
+    confirmButtonText: "Yes, Delete it",
+  });
 
-    try {
-      await axios.delete(`${import.meta.env.VITE_API_URL}/plants/${id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+  if (!confirmDelete.isConfirmed) return;
 
-      alert("Deleted successfully!");
-      fetchPlants();
-    } catch (err) {
-      console.log(err);
-      alert("Delete failed");
-    }
-  };
+  // ➤ Step 2: Delete API call
+  try {
+    await axios.delete(`${import.meta.env.VITE_API_URL}/plants/${id}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    toast.success("Plant deleted successfully!");
+    fetchPlants();
+
+  } catch (err) {
+    console.log(err);
+    toast.error("Failed to delete plant!");
+  }
+};
 
   return (
     <AdminLayout title="Manage Plants">

@@ -3,6 +3,7 @@ import { useLocation } from "react-router";
 import axios from "axios";
 import Navbar from "../Components/Navbar";
 import toast, { Toaster } from "react-hot-toast";
+import Swal from "sweetalert2";
 
 function Order() {
   const location = useLocation();
@@ -92,38 +93,51 @@ function Order() {
     0
   );
 
-  const placeOrder = async () => {
-    try {
-      const token = localStorage.getItem("token");
+const placeOrder = async () => {
+  try {
+    const token = localStorage.getItem("token");
 
-      const res = await axios.post(
-        `${import.meta.env.VITE_API_URL}/order/place`,
-        {
-          items,
-          totalAmount,
-          paymentMethod,
-          address: {
-            fullName,
-            mobile,
-            addressLine: address,
-            city,
-            state,
-            zip,
-          },
+    const res = await axios.post(
+      `${import.meta.env.VITE_API_URL}/order/place`,
+      {
+        items,
+        totalAmount,
+        paymentMethod,
+        address: {
+          fullName,
+          mobile,
+          addressLine: address,
+          city,
+          state,
+          zip,
         },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+      },
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
 
-      toast.success("Order placed successfully!");
+    Swal.fire({
+      icon: "success",
+      title: "Order Placed Successfully!",
+      text: "Your order has been submitted.",
+      showConfirmButton: false,
+      timer: 1800
+    });
 
-      setTimeout(() => {
-        window.location.href = "/my-orders";
-      }, 1200);
-    } catch (err) {
-      console.log(err);
-      toast.error("Order failed!");
-    }
-  };
+    setTimeout(() => {
+      window.location.href = "/my-orders";
+    }, 1500);
+
+  } catch (err) {
+    console.log(err);
+
+    Swal.fire({
+      icon: "error",
+      title: "Order Failed!",
+      text: err.response?.data?.message || "Something went wrong!",
+    });
+  }
+};
+
 
   if (loading)
     return <h2 className="text-center p-6 text-xl">Loading Order...</h2>;
@@ -134,7 +148,7 @@ function Order() {
 
       <Toaster position="top-center" />
 
-      <div className="min-h-screen bg-gray-100 py-10 px-4 flex justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-green-50 to-green-100/40 py-10 px-4 flex justify-center">
         <div className="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-10">
 
           <div className="bg-white p-8 rounded-xl shadow-lg">
@@ -248,7 +262,7 @@ function Order() {
 
             <button
               onClick={placeOrder}
-              className="mt-6 w-full bg-orange-600 text-white py-3 rounded-lg text-md hover:bg-orange-700 transition"
+              className="mt-6 w-full cursor-pointer bg-orange-600 text-white py-3 rounded-lg text-md hover:bg-orange-700 transition"
             >
               Confirm Order
             </button>

@@ -1,49 +1,94 @@
 import { Link } from "react-router";
 
 function PlantCard({ plant }) {
-
   const discountedPrice = plant.saleDiscount
-    ? plant.price - (plant.price * plant.saleDiscount) / 100
-    : plant.price;
+  ? Number((plant.price - (plant.price * plant.saleDiscount) / 100).toFixed(2))
+  : plant.price;
+
 
   return (
-    <div className="bg-white shadow rounded-lg p-4 relative hover:shadow-lg transition">
+    <div
+      className="
+        bg-white rounded-2xl shadow-md 
+        hover:shadow-2xl hover:-translate-y-2 
+        transition-all duration-300 
+        overflow-hidden border border-green-200
+      "
+    >
 
-      {plant.saleBadge && (
-        <span className="absolute top-2 left-2 bg-red-600 text-white px-2 py-1 rounded text-xs font-bold">
-          SALE {plant.saleDiscount}% OFF
-        </span>
-      )}
+      <div className="relative w-full h-56">
+        <img
+          src={plant.image}
+          alt={plant.name}
+          className="w-full h-full object-cover rounded-t-2xl"
+        />
 
-      <img
-        src={plant.image}
-        alt={plant.name}
-        className="w-full h-48 rounded-md object-cover"
-      />
-
-      <h3 className="text-xl font-semibold mt-3">{plant.name}</h3>
-
-      <span className="text-sm bg-green-100 text-green-700 px-2 py-1 mt-1 rounded">
-        {plant.category}
-      </span>
-
-      <div className="mt-3">
-        {plant.saleDiscount > 0 ? (
-          <>
-            <p className="text-lg font-bold text-red-600">₹{discountedPrice}</p>
-            <p className="line-through text-gray-500 text-sm">₹{plant.price}</p>
-          </>
-        ) : (
-          <p className="text-lg font-bold">₹{plant.price}</p>
+        {plant.saleBadge && (
+          <span
+            className="
+              absolute top-3 left-3 
+              bg-red-600 text-white text-xs font-bold
+              px-3 py-1 rounded-full shadow-md
+              tracking-wide
+            "
+          >
+            {plant.saleDiscount}% OFF
+          </span>
         )}
+
+        <span
+          className="
+            absolute top-3 right-3 
+            bg-green-700 text-white 
+            text-xs font-semibold 
+            px-3 py-1 rounded-full shadow-md tracking-wide
+          "
+        >
+          {plant.category}
+        </span>
       </div>
 
-      <Link to={`/plants/slug/${plant.slug}`}>
-        <button className="mt-4 w-full bg-green-600 text-white py-2 rounded hover:bg-green-700 transition">
-          View Details
-        </button>
-      </Link>
+      <div className="px-4 py-5">
 
+        <h3 className="text-lg font-semibold text-gray-900 text-center mb-1">
+          {plant.name}
+        </h3>
+
+        <div className="w-10 mx-auto h-[2px] bg-green-500/70 rounded-full mb-3"></div>
+
+        <div className="flex flex-col items-center mt-1">
+          {plant.saleDiscount > 0 ? (
+            <>
+              <p className="text-2xl font-extrabold text-green-700">
+                ₹{discountedPrice}
+              </p>
+              <p className="line-through text-gray-400 text-sm -mt-1">
+                ₹{plant.price}
+              </p>
+            </>
+          ) : (
+            <p className="text-2xl font-extrabold text-green-700">
+              ₹{plant.price}
+            </p>
+          )}
+        </div>
+
+        <Link to={`/plants/slug/${plant.slug}`}>
+          <button
+            className="
+              mt-4 w-full py-2.5 
+              bg-gradient-to-r from-green-600 to-green-700 
+              text-white font-semibold
+              rounded-xl shadow-md
+              hover:shadow-lg hover:scale-[1.02]
+              transition-all duration-300 cursor-pointer
+            "
+          >
+            View Details
+          </button>
+        </Link>
+
+      </div>
     </div>
   );
 }

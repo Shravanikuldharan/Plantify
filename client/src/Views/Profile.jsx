@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Navbar from "../Components/Navbar";
+import toast, { Toaster } from "react-hot-toast";
 import { FiEdit2 } from "react-icons/fi";
 
 function Profile() {
     const [user, setUser] = useState(null);
     const [editing, setEditing] = useState(false);
-       const [form, setForm] = useState({});
+    const [form, setForm] = useState({});
     const [saving, setSaving] = useState(false);
 
     useEffect(() => {
@@ -36,20 +37,23 @@ function Profile() {
                 localStorage.setItem("loggedInUser", JSON.stringify(res.data.user));
                 setUser(res.data.user);
                 setEditing(false);
+                toast.success("Profile updated successfully!");
             }
         } catch (err) {
             console.log(err);
-            alert("Update failed");
+            toast.error("Failed to update profile!");
         } finally {
             setSaving(false);
         }
     };
+
 
     if (!user) return <div className="p-10 text-center">Loading...</div>;
 
     return (
         <>
             <Navbar />
+            <Toaster position="top-center" />
 
             <div className="min-h-screen bg-gray-100">
                 <div

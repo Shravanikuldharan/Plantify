@@ -3,6 +3,7 @@ import axios from "axios";
 import Navbar from "../Components/Navbar";
 import { Link } from "react-router";
 import { FaTimes } from "react-icons/fa";
+import toast, { Toaster } from "react-hot-toast";
 
 function Wishlist() {
   const [items, setItems] = useState([]);
@@ -18,6 +19,7 @@ function Wishlist() {
       setItems(res.data.wishlist);
     } catch (err) {
       console.log(err);
+      toast.error("Failed to load wishlist!");
     }
   };
 
@@ -30,10 +32,12 @@ function Wishlist() {
         { plantId: id },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-
+      
+      toast.success("Removed from wishlist!");
       loadWishlist();
     } catch (err) {
       console.log(err);
+      toast.error("Failed to remove wishlist!");
     }
   };
 
@@ -46,6 +50,7 @@ function Wishlist() {
       <Navbar />
 
       <div className="max-w-6xl mx-auto mt-10 p-10">
+        <Toaster position="top-center" reverseOrder={false} />
 
         {items.length === 0 ? (
           <p className="text-center text-gray-600 text-lg">No items yet.</p>

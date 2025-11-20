@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router";
 import signupImg from "../assets/about.png"; 
+import toast, { Toaster } from "react-hot-toast";
 import { FiUser, FiMail, FiLock, FiPhone, FiMapPin, FiEye, FiEyeOff } from "react-icons/fi";
 
 function Signup() {
@@ -26,17 +27,21 @@ function Signup() {
       );
 
       if (response?.data?.success) {
-        alert("Signup successful!");
-        window.location.href = "/login";
+       toast.success("Signup successful!");
+        setTimeout(() => {
+          window.location.href = "/login";
+        }, 1200);
       }
     } catch (err) {
       console.error("Signup failed:", err);
+      toast.error(err.response?.data?.message || "Something went wrong");
       setError(err.response?.data?.message || "Something went wrong");
     }
   };
 
   return (
     <div className="w-full h-screen flex overflow-hidden bg-[#F6FFF6]">
+        <Toaster position="top-center" reverseOrder={false} />
 
       <div className="hidden md:flex w-1/2 h-full items-center justify-center bg-[#E9F8EA]">
         <img

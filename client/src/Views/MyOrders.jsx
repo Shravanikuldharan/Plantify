@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Navbar from "../Components/Navbar";
+import Swal from "sweetalert2";
+import toast, { Toaster } from "react-hot-toast";
 
 function MyOrders() {
   const [orders, setOrders] = useState([]);
@@ -27,36 +29,49 @@ function MyOrders() {
       setLoading(false);
     } catch (err) {
       console.log("Error fetching orders:", err);
+      toast.error("Failed to load orders!");
     }
   };
 
   const cancelOrderFunction = async (orderId) => {
-    const sure = confirm("Cancel this order?");
-    if (!sure) return;
+    Swal.fire({
+      title: "Cancel this order?",
+      text: "This action cannot be undone!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, cancel it",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const token = localStorage.getItem("token");
 
-    try {
-      const token = localStorage.getItem("token");
+          await axios.put(
+            `${import.meta.env.VITE_API_URL}/order/cancel/${orderId}`,
+            {},
+            { headers: { Authorization: `Bearer ${token}` } }
+          );
 
-      await axios.put(
-        `${import.meta.env.VITE_API_URL}/order/cancel/${orderId}`,
-        {},
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+          // Remove cancelled order from UI
+          setOrders((prev) => prev.filter((order) => order._id !== orderId));
 
-      setOrders(prev => prev.filter(order => order._id !== orderId)); //remove after cancel
-      alert("Order cancelled!");
-
-    } catch (err) {
-      console.log(err);
-      alert("Failed to cancel");
-    }
+          toast.success("Order cancelled successfully!");
+        } catch (err) {
+          console.log(err);
+          toast.error("Failed to cancel order!");
+        }
+      }
+    });
   };
 
-  if (loading) return <p className="text-center p-8 text-lg">Loading orders...</p>;
+  if (loading)
+    return <p className="text-center p-8 text-lg">Loading orders...</p>;
 
   return (
     <>
       <Navbar />
+      <Toaster position="top-center" reverseOrder={false} />
 
       <div className="max-w-6xl mx-auto mt-10 p-6">
         {orders.length === 0 && (
@@ -70,19 +85,20 @@ function MyOrders() {
               className="bg-white shadow-md border rounded-xl p-6"
             >
               <div className="flex justify-between items-center mb-4">
-
                 <h2 className="font-semibold text-xl">
                   Order ID: <span className="text-gray-600">{order._id}</span>
                 </h2>
+
                 <span
-                  className={`px-4 py-1 rounded-full text-sm font-bold ${order.status === "Delivered"
+                  className={`px-4 py-1 rounded-full text-sm font-bold ${
+                    order.status === "Delivered"
                       ? "bg-green-200 text-green-700"
                       : order.status === "Shipped"
-                        ? "bg-blue-200 text-blue-700"
-                        : order.status === "Processing"
-                          ? "bg-yellow-200 text-yellow-700"
-                          : "bg-gray-200 text-gray-700"
-                    }`}
+                      ? "bg-blue-200 text-blue-700"
+                      : order.status === "Processing"
+                      ? "bg-yellow-200 text-yellow-700"
+                      : "bg-gray-200 text-gray-700"
+                  }`}
                 >
                   {order.status}
                 </span>
@@ -109,7 +125,9 @@ function MyOrders() {
                   </div>
                 ))}
               </div>
+
               <hr className="my-4" />
+
               <div className="flex justify-between text-lg">
                 {order.status === "Pending" && (
                   <button

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router";
 import axios from "axios";
 import Navbar from "../Components/Navbar";
+import toast, { Toaster } from "react-hot-toast";
 
 function Order() {
   const location = useLocation();
@@ -27,6 +28,7 @@ function Order() {
   const loadItems = async () => {
     try {
       const token = localStorage.getItem("token");
+      if (!token) return toast.error("Please login first!");
 
       if (slug) {
         const res = await axios.get(
@@ -81,6 +83,7 @@ function Order() {
       }
     } catch (err) {
       console.log(err);
+      toast.error("Failed to load order items!");
     }
   };
 
@@ -111,11 +114,14 @@ function Order() {
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
-      alert("Order placed successfully!");
-      window.location.href = "/my-orders";
+      toast.success("Order placed successfully!");
+
+      setTimeout(() => {
+        window.location.href = "/my-orders";
+      }, 1200);
     } catch (err) {
       console.log(err);
-      alert("Order failed!");
+      toast.error("Order failed!");
     }
   };
 
@@ -125,6 +131,8 @@ function Order() {
   return (
     <>
       <Navbar />
+
+      <Toaster position="top-center" />
 
       <div className="min-h-screen bg-gray-100 py-10 px-4 flex justify-center">
         <div className="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-10">

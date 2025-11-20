@@ -3,6 +3,8 @@ import { Link } from "react-router";
 import axios from "axios";
 import Navbar from "../Components/Navbar";
 import { FaTrash, FaMinus, FaPlus } from "react-icons/fa";
+import toast, { Toaster } from "react-hot-toast";
+import Swal from "sweetalert2";
 
 function Cart() {
   const [cart, setCart] = useState([]);
@@ -14,7 +16,7 @@ function Cart() {
   const fetchCart = async () => {
     try {
       const token = localStorage.getItem("token");
-      if (!token) return alert("Please login first!");
+      if (!token) return toast.error("Please login first!");
 
       const res = await axios.get(`${import.meta.env.VITE_API_URL}/cart`, {
         headers: { Authorization: `Bearer ${token}` },
@@ -23,6 +25,7 @@ function Cart() {
       setCart(res.data.cart?.items || []);
     } catch (error) {
       console.log("Error loading cart:", error);
+      toast.error("Failed to load cart!");
     }
   };
 
@@ -39,26 +42,37 @@ function Cart() {
       fetchCart();
     } catch (err) {
       console.log(err);
-      alert("Error updating quantity");
+      toast.error("Error updating quantity");
     }
   };
 
   const removeItem = async (plantId) => {
-    if (!window.confirm("Remove item?")) return;
+    Swal.fire({
+      title: "Remove this item?",
+      text: "Item will be removed from your cart.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, remove",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const token = localStorage.getItem("token");
 
-    try {
-      const token = localStorage.getItem("token");
+          await axios.delete(
+            `${import.meta.env.VITE_API_URL}/cart/remove/${plantId}`,
+            { headers: { Authorization: `Bearer ${token}` } }
+          );
 
-      await axios.delete(
-        `${import.meta.env.VITE_API_URL}/cart/remove/${plantId}`,
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-
-      fetchCart();
-    } catch (err) {
-      console.log(err);
-      alert("Error removing item");
-    }
+          toast.success("Item removed from cart");
+          fetchCart();
+        } catch (err) {
+          console.log(err);
+          toast.error("Error removing item");
+        }
+      }
+    });
   };
 
   const getDiscountedPrice = (plant) => {
@@ -74,9 +88,9 @@ function Cart() {
   return (
     <>
       <Navbar />
+      <Toaster position="top-center" reverseOrder={false} />
 
       <div className="max-w-6xl mx-auto mt-4 p-6">
-
         {cart.length === 0 ? (
           <div className="text-center text-gray-500 text-lg p-10">
             Your cart is empty.
@@ -110,10 +124,11 @@ function Cart() {
                             {plant.name}
                           </h2>
                         </Link>
-                        <p className="text-red-600 font-bold text-lg mt-1">₹{discounted}</p>
+                        <p className="text-red-600 font-bold text-lg mt-1">
+                          ₹{discounted}
+                        </p>
                       </div>
                     </div>
-
 
                     <div className="flex flex-col items-end">
 
@@ -175,8 +190,7 @@ function Cart() {
               </div>
 
               <button
-                onClick={() => window.location.href = "/order?type=cart"}
-
+                onClick={() => (window.location.href = "/order?type=cart")}
                 className="mt-6 w-full cursor-pointer bg-green-600 text-white py-3 rounded-lg shadow hover:bg-green-700 transition flex items-center justify-center gap-2 text-lg font-semibold"
               >
                 Proceed to Checkout

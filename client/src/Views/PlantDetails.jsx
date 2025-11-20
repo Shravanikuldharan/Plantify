@@ -6,6 +6,7 @@ import Navbar from "../Components/Navbar.jsx";
 import Footer from "../Components/Footer.jsx";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { FaMinus, FaPlus, FaTruck } from "react-icons/fa";
+import toast, { Toaster } from "react-hot-toast";
 
 function PlantDetails() {
   const { slug } = useParams();
@@ -41,11 +42,17 @@ function PlantDetails() {
       }
     } catch (error) {
       console.log("Error fetching plant:", error);
+      toast.error("Failed to load plant details!");
     }
   };
 
   if (!plant) {
-    return <div className="text-center p-10">Loading...</div>;
+    return (
+      <div className="text-center p-10">
+        <Toaster />
+        Loading...
+      </div>
+    );
   }
 
   const discountedPrice = plant.saleDiscount
@@ -54,7 +61,7 @@ function PlantDetails() {
 
   const addToCart = async () => {
     const token = localStorage.getItem("token");
-    if (!token) return alert("Please login first!");
+    if (!token) return toast.error("Please login first!");
 
     try {
       await axios.post(
@@ -62,16 +69,17 @@ function PlantDetails() {
         { plantId: plant._id, qty },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      alert("Added to cart!");
+
+      toast.success("Added to cart!");
     } catch (err) {
       console.log(err);
-      alert("Error adding to cart");
+      toast.error("Error adding to cart");
     }
   };
 
   const toggleWishlist = async () => {
     const token = localStorage.getItem("token");
-    if (!token) return alert("Please login first!");
+    if (!token) return toast.error("Please login first!");
 
     try {
       const endpoint = wished ? "/wishlist/remove" : "/wishlist/add";
@@ -83,22 +91,24 @@ function PlantDetails() {
       );
 
       setWished(!wished);
-      alert(res.data.message);
+      toast.success(res.data.message);
     } catch (err) {
       console.log(err);
-      alert("Error updating wishlist");
+      toast.error("Error updating wishlist");
     }
   };
 
   const handleBuyNow = () => {
     const token = localStorage.getItem("token");
-    if (!token) return alert("Please login first!");
+    if (!token) return toast.error("Please login first!");
+
     window.location.href = `/order?slug=${plant.slug}&qty=${qty}`;
   };
 
   return (
     <>
       <Navbar />
+      <Toaster position="top-center" reverseOrder={false} />
 
       <div className="max-w-7xl mx-auto p-12">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
@@ -117,7 +127,7 @@ function PlantDetails() {
 
               <button
                 onClick={toggleWishlist}
-                className="absolute top-4 cursor-pointer right-4 bg-white p-3 rounded-full shadow-md hover:bg-pink-100 transition"
+                className="absolute top-4 right-4 bg-white cursor-pointer p-3 rounded-full shadow-md hover:bg-pink-100 transition"
               >
                 {wished ? (
                   <AiFillHeart className="text-pink-600 text-2xl" />
@@ -164,13 +174,12 @@ function PlantDetails() {
           </div>
 
           <div className="flex flex-col pr-6">
-
             <h1 className="text-4xl font-bold mb-2 text-gray-900">{plant.name}</h1>
             <p className="text-gray-500 italic mb-4">{tagline}</p>
 
-            <div className="flex items-center gap-4 mb-1">
+            <div className="flex items-center gap-4 mb-2">
               {plant.saleDiscount > 0 && (
-                <span className="bg-[#CC0C39] mb-2 text-white px-2 py-[2px] rounded-md text-md font-semibold">
+                <span className="bg-[#CC0C39] text-white px-2 py-[2px] rounded-md text-md font-semibold">
                   Limited time deal
                 </span>
               )}
@@ -250,7 +259,6 @@ function PlantDetails() {
                 <li>• Cash on Delivery available</li>
               </ul>
             </div>
-
           </div>
         </div>
       </div>

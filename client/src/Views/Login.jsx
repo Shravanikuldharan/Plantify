@@ -3,6 +3,7 @@ import axios from "axios";
 import { Link } from "react-router";
 import loginImg from "../assets/login.png";
 import { FiMail, FiLock, FiEye, FiEyeOff } from "react-icons/fi";
+import toast, { Toaster } from "react-hot-toast";
 
 function Login() {
   const [user, setUser] = useState({
@@ -23,6 +24,7 @@ function Login() {
       );
 
       if (response?.data?.success) {
+        toast.success("Login successful!");
         const loggedUser = response.data.user;
         const token = response.data.token;
 
@@ -36,13 +38,15 @@ function Login() {
         }
       }
     } catch (err) {
-      console.error("Login failed:", err);
-      setError(err.response?.data?.message || "Something went wrong");
+      const msg = err.response?.data?.message || "Something went wrong";
+      toast.error(msg);
+      setError(msg);
     }
   };
 
   return (
     <div className="w-full h-screen flex overflow-hidden bg-[#F6FFF6]">
+        <Toaster position="top-center" reverseOrder={false} />
 
       <div className="w-full md:w-1/2 h-full flex flex-col justify-center items-center px-10 bg-white">
 

@@ -15,6 +15,36 @@ function Home() {
   const images = [hero1, hero2, hero3, hero4];
   const [current, setCurrent] = useState(0);
 
+  // useEffect(() => {
+  //   const checkServer = async () => {
+  //     try {
+  //       const controller = new AbortController();
+  //       const timeout = setTimeout(() => controller.abort(), 3000);
+
+  //       await fetch(`${import.meta.env.VITE_API_URL}/health`, {
+  //         signal: controller.signal,
+  //       });
+
+  //       clearTimeout(timeout);
+  //       console.log("Server is awake.");
+  //     } catch (err) {
+  //       console.log("Server waking up or timeout:", err.message);
+
+  //       toast.loading("Please wait 50 seconds for the server to start..", {
+  //         id: "server-wake",
+  //         duration: 50000,
+  //       });
+
+  //       setTimeout(() => {
+  //         toast.dismiss("server-wake");
+  //         toast.success("✅ Server is awake!");
+  //       }, 50000);
+  //     }
+  //   };
+
+  //   checkServer();
+  // }, []);
+
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrent((prev) => (prev + 1) % images.length);

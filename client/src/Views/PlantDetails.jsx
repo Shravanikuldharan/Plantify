@@ -122,6 +122,18 @@ function PlantDetails() {
     }
   };
 
+  const handleBuyNow = () => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      alert("Please login first!");
+      return;
+    }
+
+    window.location.href = `/order?slug=${plant.slug}&qty=${qty}`;
+  };
+
+
   return (
     <>
       <Navbar />
@@ -202,9 +214,7 @@ function PlantDetails() {
               </button>
 
               <button
-                onClick={() =>
-                  window.location.href = `/order?slug=${plant.slug}&qty=${qty}`
-                }
+                onClick={handleBuyNow}
                 className="bg-orange-500 text-white px-8 py-3 rounded-lg"
               >
                 Buy Now

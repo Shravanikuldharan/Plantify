@@ -114,7 +114,7 @@ function Cart() {
                       </div>
                     </div>
 
-                    <div className="flex flex-col items-end">
+                    {/* <div className="flex flex-col items-end">
 
                       <div className="flex items-center gap-2 bg-gray-100 px-3 py-2 rounded-lg shadow-inner w-fit">
 
@@ -140,10 +140,45 @@ function Cart() {
                       <button
                         onClick={() => removeItem(plant._id)}
                         className="text-red-600 hover:text-red-800 transition mt-3 flex items-center gap-1 text-sm"
-                      >
+                      >Remove
                         <FaTrash />
                       </button>
-                    </div>
+                    </div> */}
+                    <div className="flex flex-col items-end">
+
+  {/* QUANTITY BOX */}
+  <div className="flex items-center gap-2 bg-gray-100 px-3 py-2 rounded-lg shadow-inner w-fit">
+    <button
+      onClick={() => item.qty > 1 && updateQty(plant._id, -1)}
+      className="w-7 h-7 flex items-center justify-center transition active:scale-95"
+    >
+      <FaMinus className="text-gray-700 cursor-pointer text-sm" />
+    </button>
+
+    <span className="text-lg font-semibold text-gray-900 min-w-[20px] text-center">
+      {item.qty}
+    </span>
+
+    <button
+      onClick={() => item.qty < plant.stock && updateQty(plant._id, +1)}
+      className="w-7 h-7 flex items-center justify-center transition active:scale-95"
+    >
+      <FaPlus className="text-gray-700 cursor-pointer text-sm" />
+    </button>
+  </div>
+
+  {/* REMOVE BUTTON BELOW */}
+ <button
+  onClick={() => removeItem(plant._id)}
+  className="mt-3 w-29 cursor-pointer h-8 flex items-center justify-center gap-2 bg-red-50 text-red-600 rounded-md shadow hover:bg-red-100 active:scale-95 transition text-sm font-medium"
+>
+  <FaTrash className="text-red-600 text-sm" />
+  Remove
+</button>
+
+
+</div>
+
                   </div>
                 );
               })}

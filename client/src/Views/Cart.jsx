@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router";
 import axios from "axios";
 import Navbar from "../Components/Navbar";
+import emptyCartIcon from "./../assets/empty.png";
 import { FaTrash, FaMinus, FaPlus } from "react-icons/fa";
 import toast, { Toaster } from "react-hot-toast";
 import Swal from "sweetalert2";
@@ -86,14 +87,18 @@ function Cart() {
   }, 0);
 
   return (
-    <>
+    <div className="min-h-screen bg-gradient-to-br from-green-50 to-green-100/40">
       <Navbar />
       <Toaster position="top-center" reverseOrder={false} />
 
       <div className="max-w-6xl mx-auto mt-4 p-6">
         {cart.length === 0 ? (
-          <div className="text-center text-gray-500 text-lg p-10">
-            Your cart is empty.
+         <div className="text-center text-gray-600 text-lg p-10 flex flex-col items-center">
+            <img
+              src={emptyCartIcon}
+              className="w-36 h-36 mb-8"
+            />
+            <p className="text-xl font-medium">Oops! Nothing in your cart yet.</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -199,7 +204,7 @@ function Cart() {
           </div>
         )}
       </div>
-    </>
+    </div>
   );
 }
 

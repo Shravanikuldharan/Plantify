@@ -3,6 +3,7 @@ import axios from "axios";
 import PlantCard from "../Components/PlantCard";
 import Navbar from "../Components/Navbar";
 import { FiSearch } from "react-icons/fi";
+import Footer from "../Components/Footer";
 
 function AllPlants() {
   const [plants, setPlants] = useState([]);
@@ -135,6 +136,7 @@ function AllPlants() {
           )}
         </div>
       </div>
+    <Footer />
     </>
   );
 }

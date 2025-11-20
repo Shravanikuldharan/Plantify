@@ -46,8 +46,8 @@ const featuresData = [
 
 const Features = () => {
   return (
-    <section className="py-12 sm:py-16">
-      <div className="max-w-6xl mx-auto text-center mb-10 px-4">
+    <section className="bg-gradient-to-br from-green-50 to-green-100/40 py-10 sm:py-16">
+      <div className="max-w-6xl mx-auto text-center mb-14 px-4">
         <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-600 mb-3">
           Why Choose Our <span className="text-green-600">Plant Nursery</span>?
         </h2>

@@ -55,7 +55,7 @@ function Profile() {
             <Navbar />
             <Toaster position="top-center" />
 
-            <div className="min-h-screen bg-gray-100">
+            <div className="min-h-screen bg-gradient-to-br from-green-50 to-green-100/40">
                 <div
                     className="h-48 w-full relative bg-cover bg-center"
                     style={{
@@ -70,7 +70,7 @@ function Profile() {
                     </div>
                 </div>
 
-                <div className="max-w-4xl mx-auto pt-24 pb-16 px-4 bg-gray-100">
+                <div className="max-w-4xl mx-auto pt-24 pb-16 px-4 bg-gradient-to-br from-green-50 to-green-100/40">
                     <div className="text-center mb-8">
                         <h1 className="text-3xl font-semibold text-gray-800">{user.name}</h1>
                         <p className="mt-2 text-gray-600">Manage your personal details</p>

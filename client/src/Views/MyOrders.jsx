@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Navbar from "../Components/Navbar";
 import Swal from "sweetalert2";
+import emptyOrdersIcon from "./../assets/empty.png";
 import toast, { Toaster } from "react-hot-toast";
 
 function MyOrders() {
@@ -69,13 +70,19 @@ function MyOrders() {
     return <p className="text-center p-8 text-lg">Loading orders...</p>;
 
   return (
-    <>
+  <div className="min-h-screen flex flex-col bg-gradient-to-br from-green-50 to-green-100/40">
       <Navbar />
       <Toaster position="top-center" reverseOrder={false} />
 
       <div className="max-w-6xl mx-auto mt-10 p-6">
         {orders.length === 0 && (
-          <p className="text-center text-gray-600 text-xl">No orders yet</p>
+          <div className="text-center text-gray-600 p-10 flex flex-col items-center">
+            <img
+              src={emptyOrdersIcon}
+              className="w-32 h-32 mb-6"
+            />
+            <p className="text-xl font-medium">You haven't placed any orders..</p>
+          </div>
         )}
 
         <div className="space-y-6">
@@ -153,7 +160,7 @@ function MyOrders() {
           ))}
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

@@ -24,7 +24,7 @@ function Home() {
   }, [images.length]);
 
   return (
-    <div className="bg-gray-50 min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-green-50 to-green-100/40">
       <Navbar />
 
       <div className="relative h-[70vh] sm:h-[80vh] md:h-[90vh] overflow-hidden">

@@ -1,6 +1,4 @@
 import React from "react";
-
-// Replace these with your nursery images/icons
 import aboutImage from "../assets/about.png";
 import visionIcon from "../assets/vision.png";
 import missionIcon from "../assets/goal.png";
@@ -22,9 +20,9 @@ const About = () => {
   ];
 
   return (
-    <div className="bg-gray-50 min-h-screen flex flex-col">
+    <div className="bg-gradient-to-br from-green-50 to-green-100/40">
       <Navbar />
-      <section className="flex flex-col md:flex-row items-center justify-between w-full py-8 gap-8 md:gap-10 bg-[#F5F7FA] px-4 sm:px-10 md:px-16">
+      <section className="flex flex-col md:flex-row items-center justify-between w-full py-8 gap-8 md:gap-10 bg-gradient-to-br from-green-50 to-green-100/40 px-4 sm:px-10 md:px-16">
         <div className="w-full md:w-1/2 space-y-6 sm:space-y-8">
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-green-700">
             About Plantify 🌿
@@ -112,7 +110,7 @@ const About = () => {
         </div>
       </section>
 
-      <section className="py-12 sm:py-20 text-center bg-[#F5F7FA] w-full">
+      <section className="py-12 sm:py-20 text-center bg-gradient-to-br from-green-50 to-green-100/40 w-full">
         <h2 className="text-2xl sm:text-3xl font-bold mb-8 sm:mb-12 text-green-700">
           Meet Our Team
         </h2>
@@ -120,7 +118,7 @@ const About = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 w-full px-4 sm:px-10 md:px-16">
           {teamMembers.map((member, i) => (
             <div key={i} className="flex flex-col items-center text-center">
-              <div className="relative group w-36 sm:w-40 h-36 sm:h-40 rounded-full overflow-hidden">
+              <div className="relative group w-36 sm:w-50 h-36 sm:h-50 rounded-full overflow-hidden">
                 <img
                   src={member.img}
                   className="w-full h-full object-cover rounded-full shadow-lg transition-all duration-500 group-hover:scale-105"

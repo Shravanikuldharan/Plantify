@@ -110,7 +110,7 @@ function PlantDetails() {
       <Navbar />
       <Toaster position="top-center" reverseOrder={false} />
 
-      <div className="max-w-7xl mx-auto p-12">
+      <div className="bg-gradient-to-br from-green-50 to-green-100/40 max-w-7xl mx-auto p-12">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
 
           <div className="flex flex-col gap-6">

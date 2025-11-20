@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Navbar from "../Components/Navbar";
 import { Link } from "react-router";
+import emptyOrdersIcon from "./../assets/empty.png";
 import { FaTimes } from "react-icons/fa";
 import toast, { Toaster } from "react-hot-toast";
 
@@ -46,14 +47,20 @@ function Wishlist() {
   }, []);
 
   return (
-    <>
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-green-50 to-green-100/40">
       <Navbar />
 
       <div className="max-w-6xl mx-auto mt-10 p-10">
         <Toaster position="top-center" reverseOrder={false} />
 
         {items.length === 0 ? (
-          <p className="text-center text-gray-600 text-lg">No items yet.</p>
+          <div className="text-center text-gray-600 p-10 flex flex-col items-center">
+            <img
+              src={emptyOrdersIcon}
+              className="w-32 h-32 mb-6"
+            />
+              <p className="text-xl font-medium">No items yet.</p>
+          </div>               
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
             {items.map((w) => (
@@ -104,7 +111,7 @@ function Wishlist() {
           </div>
         )}
       </div>
-    </>
+    </div>
   );
 }
 

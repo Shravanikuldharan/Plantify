@@ -40,101 +40,105 @@ function Navbar() {
     `relative hover:text-green-700 transition ${location.pathname === path ? "text-green-700 font-semibold" : ""
     }`;
 
-  return (
-    <nav className="bg-orange-100 shadow border-b sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-10 py-3 flex justify-between items-center">
+ return (
+  <nav className="bg-white shadow-lg sticky top-0 z-50">
+    <div className="max-w-7xl mx-auto px-6 lg:px-10 py-3 flex justify-between items-center">
 
-        <Link to="/" className="flex items-center space-x-2">
-          <img src={logo} className="h-14 object-contain" alt="Logo" />
-          <h1 className="text-3xl font-bold text-green-700">Plantify</h1>
+      <Link to="/" className="flex items-center space-x-2 group">
+        <img src={logo} className="h-12 object-contain transition-transform duration-300 group-hover:scale-105" alt="Logo" />
+        <h1 className="text-3xl font-extrabold text-green-700 tracking-wide group-hover:text-green-800 transition">
+          Plantify
+        </h1>
+      </Link>
+
+      <div className="hidden md:flex items-center text-[18px] space-x-8 text-gray-700 font-medium">
+
+        <Link to="/" className={navLinkStyle("/") + " hover:text-green-700"}>
+          Home
         </Link>
 
-        <div className="flex items-center text-[18px] space-x-10 text-gray-700 font-medium">
+        <Link to="/about" className={navLinkStyle("/about") + " hover:text-green-700"}>
+          About
+        </Link>
 
-          <Link to="/" className={navLinkStyle("/")}>
-            Home
+        <Link to="/plants" className={navLinkStyle("/plants") + " hover:text-green-700"}>
+          Plants
+        </Link>
+
+        <Link to="/cart" className={navLinkStyle("/cart") + " hover:text-green-700"}>
+          Cart
+        </Link>
+
+        {!user ? (
+          <Link
+            to="/login"
+            className="text-gray-800 text-lg bg-green-100 px-4 py-1 rounded-full hover:bg-green-200 hover:text-green-700 transition font-semibold shadow-sm"
+          >
+            Login
           </Link>
-
-          <Link to="/about" className={navLinkStyle("/about")}>
-            About
-          </Link>
-
-          <Link to="/plants" className={navLinkStyle("/plants")}>
-            Plants
-          </Link>
-
-          <Link to="/cart" className={navLinkStyle("/cart")}>
-            Cart
-          </Link>
-
-          {!user ? (
-            <Link
-              to="/login"
-              className="text-gray-700 text-xl hover:text-green-700 transition"
+        ) : (
+          <div className="relative" ref={dropdownRef}>
+            <button
+              onClick={() => setDropdownOpen(!dropdownOpen)}
+              className="bg-green-600 text-white w-11 h-11 rounded-full flex items-center justify-center text-lg font-bold hover:bg-green-700 shadow-lg hover:shadow-xl transition duration-200"
             >
-              <FiUser />
-            </Link>
-          ) : (
-            <div className="relative" ref={dropdownRef}>
-              <button
-                onClick={() => setDropdownOpen(!dropdownOpen)}
-                className="bg-green-600 text-white w-10 h-10 rounded-full flex items-center justify-center text-lg font-bold hover:bg-green-700 shadow transition duration-200"
-              >
-                {userInitial}
-              </button>
+              {userInitial}
+            </button>
 
-              {/* dropedown for profile */}
-              {dropdownOpen && (
-                <div className="absolute right-0 mt-3 w-44 bg-white shadow-lg border rounded-xl py-2 animate-fadeIn">
-                  <div className="px-4 pb-2 text-gray-600 text-sm border-b">
-                    Hello, <span className="font-semibold">{user.name}</span>
-                  </div>
-
-                  <Link
-                    to="/profile"
-                    className="block px-4 py-2 hover:bg-gray-100 text-gray-700 transition"
-                  >
-                    Profile
-                  </Link>
-
-                  <Link 
-                    to="/wishlist" 
-                      className="block px-4 py-2 hover:bg-gray-100 text-gray-700 transition">
-                    Wishlist
-                  </Link>
-
-                  <Link 
-                    to="/my-orders" 
-                      className="block px-4 py-2 hover:bg-gray-100 text-gray-700 transition">
-                    My Orders
-                  </Link>
-
-                  <button
-                    onClick={handleLogout}
-                    className="w-full text-left px-4 py-2 text-red-600 hover:bg-gray-100 transition"
-                  >
-                    Logout
-                  </button>
+            {dropdownOpen && (
+              <div className="absolute right-0 mt-3 w-48 bg-white shadow-xl border rounded-xl py-2 animate-fadeIn">
+                <div className="px-4 pb-2 text-gray-600 text-sm border-b">
+                  Hello, <span className="font-semibold">{user.name}</span>
                 </div>
-              )}
-            </div>
-          )}
-        </div>
-      </div>
 
-      <style>
-        {`
-          .animate-fadeIn {
-            animation: fadeIn 0.18s ease-in-out;
-          }
-          @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-5px); }
-            to { opacity: 1; transform: translateY(0); }
-          }
-        `}
-      </style>
-    </nav>
-  );
+                <Link
+                  to="/profile"
+                  className="block px-4 py-2 hover:bg-gray-100 text-gray-700 transition"
+                >
+                  Profile
+                </Link>
+
+                <Link
+                  to="/wishlist"
+                  className="block px-4 py-2 hover:bg-gray-100 text-gray-700 transition"
+                >
+                  Wishlist
+                </Link>
+
+                <Link
+                  to="/my-orders"
+                  className="block px-4 py-2 hover:bg-gray-100 text-gray-700 transition"
+                >
+                  My Orders
+                </Link>
+
+                <button
+                  onClick={handleLogout}
+                  className="w-full text-left px-4 py-2 text-red-600 hover:bg-gray-100 transition"
+                >
+                  Logout
+                </button>
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+    </div>
+
+    <style>
+      {`
+        .animate-fadeIn {
+          animation: fadeIn 0.18s ease-in-out;
+        }
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(-5px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+      `}
+    </style>
+  </nav>
+);
+
 }
 
 export default Navbar;

@@ -72,7 +72,7 @@ function Navbar() {
         {!user ? (
           <Link
             to="/login"
-            className="text-gray-800 text-lg bg-green-100 px-4 py-1 rounded-full hover:bg-green-200 hover:text-green-700 transition font-semibold shadow-sm"
+            className="bg-green-600 cursor-pointer text-white font-semibold px-2 py-2 sm:px-4 sm:py-2 rounded-full shadow-md hover:bg-green-700 hover:scale-105 transition-all duration-300 text-sm sm:text-base"
           >
             Login
           </Link>

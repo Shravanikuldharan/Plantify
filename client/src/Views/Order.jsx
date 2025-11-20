@@ -27,13 +27,14 @@ function Order() {
   const loadItems = async () => {
     try {
       const token = localStorage.getItem("token");
+
+      // ⭐ CASE 1: BUY NOW – single item
       if (slug) {
         const res = await axios.get(
           `${import.meta.env.VITE_API_URL}/plants/slug/${slug}`
         );
 
         const plant = res.data.plant;
-
         const finalPrice =
           plant.saleDiscount > 0
             ? plant.price - (plant.price * plant.saleDiscount) / 100
@@ -48,6 +49,35 @@ function Order() {
             price: finalPrice,
           },
         ]);
+
+        setLoading(false);
+        return;
+      }
+
+      // ⭐ CASE 2: CART CHECKOUT – multiple items
+      if (query.get("type") === "cart") {
+        const cartRes = await axios.get(
+          `${import.meta.env.VITE_API_URL}/cart`,
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+
+        const formatted = cartRes.data.cart.items.map(item => {
+          const p = item.plantId;
+          const price =
+            p.saleDiscount > 0
+              ? p.price - (p.price * p.saleDiscount) / 100
+              : p.price;
+
+          return {
+            plantId: p._id,
+            name: p.name,
+            image: p.image,
+            qty: item.qty,
+            price,
+          };
+        });
+
+        setItems(formatted);
         setLoading(false);
         return;
       }

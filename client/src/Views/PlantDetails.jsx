@@ -117,7 +117,7 @@ function PlantDetails() {
 
               <button
                 onClick={toggleWishlist}
-                className="absolute top-4 right-4 bg-white p-3 rounded-full shadow-md hover:bg-pink-100 transition"
+                className="absolute top-4 cursor-pointer right-4 bg-white p-3 rounded-full shadow-md hover:bg-pink-100 transition"
               >
                 {wished ? (
                   <AiFillHeart className="text-pink-600 text-2xl" />

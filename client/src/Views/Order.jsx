@@ -28,7 +28,6 @@ function Order() {
     try {
       const token = localStorage.getItem("token");
 
-      // ⭐ CASE 1: BUY NOW – single item
       if (slug) {
         const res = await axios.get(
           `${import.meta.env.VITE_API_URL}/plants/slug/${slug}`
@@ -37,7 +36,7 @@ function Order() {
         const plant = res.data.plant;
         const finalPrice =
           plant.saleDiscount > 0
-            ? plant.price - (plant.price * plant.saleDiscount) / 100
+            ? (plant.price - (plant.price * plant.saleDiscount) / 100).toFixed(2)
             : plant.price;
 
         setItems([
@@ -54,7 +53,6 @@ function Order() {
         return;
       }
 
-      // ⭐ CASE 2: CART CHECKOUT – multiple items
       if (query.get("type") === "cart") {
         const cartRes = await axios.get(
           `${import.meta.env.VITE_API_URL}/cart`,
@@ -132,7 +130,7 @@ function Order() {
         <div className="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-10">
 
           <div className="bg-white p-8 rounded-xl shadow-lg">
-            <h2 className="text-3xl font-bold mb-6">Shipping Information</h2>
+            <h2 className="text-2xl text-orange-600 font-bold mb-6">Shipping Information</h2>
 
             <div className="space-y-4">
 
@@ -217,7 +215,7 @@ function Order() {
           </div>
 
           <div className="bg-white p-8 rounded-xl shadow-lg h-fit">
-            <h2 className="text-3xl font-bold mb-6">Order Summary</h2>
+            <h2 className="text-2xl text-orange-600 font-bold mb-6">Order Summary</h2>
 
             {items.map((item) => (
               <div key={item.plantId} className="flex gap-4 items-center mb-6">
@@ -236,13 +234,13 @@ function Order() {
 
             <hr className="my-4" />
 
-            <h3 className="text-2xl font-bold text-orange-600">
+            <h3 className="text-xl font-bold text-orange-600">
               Total: ₹{totalAmount}
             </h3>
 
             <button
               onClick={placeOrder}
-              className="mt-6 w-full bg-orange-600 text-white py-3 rounded-lg text-lg hover:bg-orange-700 transition"
+              className="mt-6 w-full bg-orange-600 text-white py-3 rounded-lg text-md hover:bg-orange-700 transition"
             >
               Confirm Order
             </button>

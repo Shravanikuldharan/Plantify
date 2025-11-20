@@ -58,9 +58,7 @@ function MyOrders() {
     <>
       <Navbar />
 
-      <div className="max-w-6xl mx-auto p-6">
-        <h1 className="text-3xl font-bold mb-6">My Orders</h1>
-
+      <div className="max-w-6xl mx-auto mt-10 p-6">
         {orders.length === 0 && (
           <p className="text-center text-gray-600 text-xl">No orders yet</p>
         )}

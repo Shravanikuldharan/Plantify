@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import AdminLayout from "../../Components/AdminLayout";
 
 function ManagePlants() {
   const [plants, setPlants] = useState([]);
@@ -38,62 +39,84 @@ function ManagePlants() {
   };
 
   return (
-    <div className="p-6 min-h-screen bg-gray-100">
-      <h1 className="text-2xl font-bold mb-6 text-center">Manage Plants</h1>
+    <AdminLayout title="Manage Plants">
 
-      {error && <p className="text-red-500">{error}</p>}
+      {error && <p className="text-red-500 mb-4">{error}</p>}
 
-      <table className="w-full bg-white shadow">
-        <thead className="bg-gray-200 font-semibold">
-          <tr>
-            <th className="p-3">Name</th>
-            <th className="p-3">Category</th>
-            <th className="p-3">Price</th>
-            <th className="p-3">Sale (%)</th>
-            <th className="p-3">Badge</th>
-            <th className="p-3">Actions</th>
-          </tr>
-        </thead>
+      <div className="overflow-x-auto shadow-lg border rounded-xl bg-white">
 
-        <tbody>
-          {plants.map((p) => (
-            <tr key={p._id} className="border-b">
-              <td className="p-3">{p.name}</td>
-              <td className="p-3">{p.category}</td>
-              <td className="p-3">₹{p.price}</td>
-              <td className="p-3">{p.saleDiscount || 0}%</td>
-              <td className="p-3">{p.saleBadge ? "✔️" : "❌"}</td>
+        <table className="w-full text-left">
 
-              <td className="p-3 flex gap-2">
-                <button
-                  onClick={() =>
-                    (window.location.href = `/admin/edit-plant/${p._id}`)
-                  }
-                  className="px-3 py-1 bg-blue-600 text-white rounded"
-                >
-                  Edit
-                </button>
-
-                <button
-                  onClick={() => handleDelete(p._id)}
-                  className="px-3 py-1 bg-red-600 text-white rounded"
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-          ))}
-
-          {plants.length === 0 && (
+          <thead className="bg-green-600 text-white uppercase text-sm">
             <tr>
-              <td colSpan="5" className="text-center p-4">
-                No plants found.
-              </td>
+              <th className="p-4">Plant</th>
+              <th className="p-4">Category</th>
+              <th className="p-4">Price</th>
+              <th className="p-4">Sale (%)</th>
+              <th className="p-4">Sale Badge</th>
+              <th className="p-4">Actions</th>
             </tr>
-          )}
-        </tbody>
-      </table>
-    </div>
+          </thead>
+
+          <tbody>
+            {plants.map((p) => (
+              <tr
+                key={p._id}
+                className="border-b hover:bg-gray-50 transition text-sm"
+              >
+                <td className="p-4 flex items-center gap-3">
+                  <img
+                    src={p.image}
+                    className="w-12 h-12 rounded object-cover border"
+                  />
+                  <span className="font-semibold">{p.name}</span>
+                </td>
+
+                <td className="p-4">{p.category}</td>
+
+                <td className="p-4 font-semibold">₹{p.price}</td>
+
+                <td className="p-4">{p.saleDiscount || 0}%</td>
+
+                <td className="p-4">
+                  {p.saleBadge ? (
+                    <span className="text-green-600 font-bold">✔ Yes</span>
+                  ) : (
+                    <span className="text-gray-500">No</span>
+                  )}
+                </td>
+
+                <td className="p-4 flex gap-3">
+                  <button
+                    onClick={() => (window.location.href = `/admin/edit-plant/${p._id}`)}
+                    className="px-4 cursor-pointer py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+                  >
+                    Edit
+                  </button>
+
+                  <button
+                    onClick={() => handleDelete(p._id)}
+                    className="px-4 cursor-pointer py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+
+            {plants.length === 0 && (
+              <tr>
+                <td colSpan="6" className="text-center p-5 text-gray-500">
+                  No plants found.
+                </td>
+              </tr>
+            )}
+          </tbody>
+
+        </table>
+
+      </div>
+    </AdminLayout>
   );
 }
 

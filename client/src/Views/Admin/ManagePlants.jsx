@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import toast, { Toaster } from "react-hot-toast";
+import Swal from "sweetalert2";
 import AdminLayout from "../../Components/AdminLayout";
 
 function ManagePlants() {
@@ -23,7 +25,6 @@ function ManagePlants() {
   }, []);
 
   const handleDelete = async (id) => {
-  // ➤ Step 1: SweetAlert confirmation box
   const confirmDelete = await Swal.fire({
     title: "Are you sure?",
     text: "This action cannot be undone!",
@@ -36,7 +37,6 @@ function ManagePlants() {
 
   if (!confirmDelete.isConfirmed) return;
 
-  // ➤ Step 2: Delete API call
   try {
     await axios.delete(`${import.meta.env.VITE_API_URL}/plants/${id}`, {
       headers: { Authorization: `Bearer ${token}` },
@@ -53,6 +53,8 @@ function ManagePlants() {
 
   return (
     <AdminLayout title="Manage Plants">
+    <Toaster />
+
 
       {error && <p className="text-red-500 mb-4">{error}</p>}
 

@@ -78,25 +78,33 @@ function PlantDetails() {
   };
 
   const toggleWishlist = async () => {
-    const token = localStorage.getItem("token");
-    if (!token) return toast.error("Please login first!");
+  const token = localStorage.getItem("token");
+  if (!token) return toast.error("Please login first!");
 
-    try {
-      const endpoint = wished ? "/wishlist/remove" : "/wishlist/add";
+  try {
+    const endpoint = wished ? "wishlist/remove" : "wishlist/add";
 
-      const res = await axios.post(
-        `${import.meta.env.VITE_API_URL}${endpoint}`,
-        { plantId: plant._id },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+    const url = `${import.meta.env.VITE_API_URL}/${endpoint}`;
 
-      setWished(!wished);
-      toast.success(res.data.message);
-    } catch (err) {
-      console.log(err);
-      toast.error("Error updating wishlist");
-    }
-  };
+    const res = await axios.post(
+      url,
+      { plantId: plant._id },
+      { 
+        headers: { 
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json"
+        } 
+      }
+    );
+
+    setWished(!wished);
+    toast.success(res.data.message);
+
+  } catch (err) {
+    console.log(err);
+    toast.error("Error updating wishlist");
+  }
+};
 
   const handleBuyNow = () => {
     const token = localStorage.getItem("token");

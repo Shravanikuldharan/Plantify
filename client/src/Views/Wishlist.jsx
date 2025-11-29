@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Navbar from "../Components/Navbar";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import emptyOrdersIcon from "./../assets/empty.png";
 import { FaTimes } from "react-icons/fa";
 import toast, { Toaster } from "react-hot-toast";
@@ -33,7 +33,7 @@ function Wishlist() {
         { plantId: id },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      
+
       toast.success("Removed from wishlist!");
       loadWishlist();
     } catch (err) {
@@ -46,6 +46,8 @@ function Wishlist() {
     loadWishlist();
   }, []);
 
+  const validItems = items.filter(w => w.plant);
+
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-green-50 to-green-100/40">
       <Navbar />
@@ -53,17 +55,17 @@ function Wishlist() {
       <div className="max-w-6xl mx-auto mt-10 p-10">
         <Toaster position="top-center" reverseOrder={false} />
 
-        {items.length === 0 ? (
+        {validItems.length === 0 ? (
           <div className="text-center text-gray-600 p-10 flex flex-col items-center">
             <img
               src={emptyOrdersIcon}
               className="w-32 h-32 mb-6"
             />
-              <p className="text-xl font-medium">No items yet.</p>
-          </div>               
+            <p className="text-xl font-medium">No items yet.</p>
+          </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-            {items.map((w) => (
+            {validItems.map((w) => (
               <div
                 key={w._id}
                 className="bg-white rounded-2xl shadow-md hover:shadow-xl border border-green-100 transition overflow-hidden"

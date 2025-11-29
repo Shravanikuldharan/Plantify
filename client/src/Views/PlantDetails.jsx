@@ -1,4 +1,4 @@
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { plantCareConfig, getCategoryTagline } from "../Config/PlantCareConfig.js";
@@ -36,7 +36,8 @@ function PlantDetails() {
         );
 
         const already = wishRes.data.wishlist.some(
-          (item) => item.plant._id === res.data.plant._id
+          // (item) => item.plant._id === res.data.plant._id
+          (item) => item.plant && item.plant._id === res.data.plant._id
         );
         setWished(already);
       }
@@ -78,33 +79,37 @@ function PlantDetails() {
   };
 
   const toggleWishlist = async () => {
-  const token = localStorage.getItem("token");
-  if (!token) return toast.error("Please login first!");
+    const token = localStorage.getItem("token");
+    if (!token) return toast.error("Please login first!");
 
-  try {
-    const endpoint = wished ? "wishlist/remove" : "wishlist/add";
+    try {
+      const endpoint = wished ? "wishlist/remove" : "wishlist/add";
 
-    const url = `${import.meta.env.VITE_API_URL}/${endpoint}`;
+      const url = `${import.meta.env.VITE_API_URL}/${endpoint}`;
 
-    const res = await axios.post(
-      url,
-      { plantId: plant._id },
-      { 
-        headers: { 
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json"
-        } 
+      const res = await axios.post(
+        url,
+        { plantId: plant._id },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json"
+          }
+        }
+      );
+      if (!plant || !plant._id) {
+        toast.error("Plant is still loading...");
+        return;
       }
-    );
 
-    setWished(!wished);
-    toast.success(res.data.message);
+      setWished(!wished);
+      toast.success(res.data.message);
 
-  } catch (err) {
-    console.log(err);
-    toast.error("Error updating wishlist");
-  }
-};
+    } catch (err) {
+      console.log(err);
+      toast.error("Error updating wishlist");
+    }
+  };
 
   const handleBuyNow = () => {
     const token = localStorage.getItem("token");
